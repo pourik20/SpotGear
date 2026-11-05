@@ -42,6 +42,7 @@ struct RegionCanvas: View {
                     )
                 }
             }
+            .coordinateSpace(name: "regionCanvas")
         }
     }
 }
@@ -63,7 +64,7 @@ private struct RegionOverlay: View {
             .frame(width: max(rect.width, 1), height: max(rect.height, 1))
             .contentShape(Rectangle())
             .onTapGesture(perform: onSelect)
-            .gesture(moveGesture)
+            .highPriorityGesture(moveGesture)
             .overlay(alignment: .topLeading) {
                 RegionNumberBadge(number: region.number, isSelected: isSelected)
                     .padding(4)
@@ -74,6 +75,7 @@ private struct RegionOverlay: View {
             .position(x: rect.midX, y: rect.midY)
             .accessibilityElement(children: .ignore)
             .accessibilityLabel("Car \(region.number)")
+            .accessibilityIdentifier("regions.frame.\(region.number)")
             .accessibilityValue(Text(verbatim: crop.accessibilityDescription))
             .accessibilityAddTraits(isSelected ? [.isSelected] : [])
             .accessibilityAction(named: "Select to Edit", onSelect)
@@ -104,7 +106,9 @@ private struct RegionOverlay: View {
     }
 
     private var moveGesture: some Gesture {
-        DragGesture(minimumDistance: 4)
+        // The frame itself moves during a drag. Measuring in its local coordinates
+        // feeds that movement back into the next translation and makes it jump.
+        DragGesture(minimumDistance: 4, coordinateSpace: .named("regionCanvas"))
             .onChanged { value in
                 onSelect()
                 let delta = ImageGeometry.normalizedDelta(value.translation, in: fitted)
@@ -124,7 +128,7 @@ private struct RegionOverlay: View {
             .frame(width: Spacing.minimumTapTarget, height: Spacing.minimumTapTarget)
             .contentShape(Rectangle())
             .gesture(
-                DragGesture(minimumDistance: 1)
+                DragGesture(minimumDistance: 1, coordinateSpace: .named("regionCanvas"))
                     .onChanged { value in
                         let delta = ImageGeometry.normalizedDelta(value.translation, in: fitted)
                         onPreview(region.crop.resizedFromBottomRight(dx: delta.dx, dy: delta.dy))

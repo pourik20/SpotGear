@@ -41,6 +41,7 @@ struct RegionSelectionView: View {
                         ForEach(session.regions) { region in
                             RegionRow(
                                 region: region,
+                                image: session.workingImage,
                                 isSelected: region.id == selectedID,
                                 onSelect: { selectedID = region.id },
                                 onConfirm: { onOpenRegion(region.id) },
@@ -107,6 +108,7 @@ struct RegionSelectionView: View {
 
 private struct RegionRow: View {
     let region: RegionDraft
+    let image: CGImage?
     let isSelected: Bool
     let onSelect: () -> Void
     let onConfirm: () -> Void
@@ -123,6 +125,14 @@ private struct RegionRow: View {
 
     private var summary: some View {
         HStack(spacing: Spacing.small) {
+            if let image, let cropped = CardRenderer.crop(image, to: region.crop) {
+                Image(decorative: cropped, scale: 1)
+                    .resizable()
+                    .scaledToFit()
+                    .frame(width: 72, height: 56)
+                    .background(Theme.night)
+                    .accessibilityHidden(true)
+            }
             RegionNumberBadge(number: region.number, isSelected: isSelected)
             VStack(alignment: .leading, spacing: 2) {
                 Text("Car \(region.number)")

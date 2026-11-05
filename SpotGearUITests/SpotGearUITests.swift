@@ -77,6 +77,43 @@ final class SpotGearUITests: XCTestCase {
         XCTAssertEqual(cards.count, 1)
     }
 
+    func testCropFrameFollowsMoveAndResizeDrag() {
+        launch()
+        importTestPhoto()
+        app.buttons["regions.add"].tap()
+        let crop = app.descendants(matching: .any)["regions.frame.1"].firstMatch
+        XCTAssertTrue(crop.waitForExistence(timeout: 5))
+        let original = crop.frame
+        let start = crop.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.5))
+        start.press(forDuration: 0.1, thenDragTo: start.withOffset(CGVector(dx: 50, dy: 30)),
+                    withVelocity: .slow, thenHoldForDuration: 0.1)
+        let moved = crop.frame
+        XCTAssertEqual(moved.minX, original.minX + 50, accuracy: 4)
+        XCTAssertEqual(moved.minY, original.minY + 30, accuracy: 4)
+        XCTAssertEqual(moved.width, original.width, accuracy: 2)
+        XCTAssertEqual(moved.height, original.height, accuracy: 2)
+
+        // The resize target is centered 22 points inside the bottom-right corner.
+        let handle = crop.coordinate(withNormalizedOffset: CGVector(dx: 1, dy: 1))
+            .withOffset(CGVector(dx: -22, dy: -22))
+        handle.press(forDuration: 0.1, thenDragTo: handle.withOffset(CGVector(dx: -40, dy: -25)),
+                     withVelocity: .slow, thenHoldForDuration: 0.1)
+        let resized = crop.frame
+        XCTAssertEqual(resized.minX, moved.minX, accuracy: 2)
+        XCTAssertEqual(resized.minY, moved.minY, accuracy: 2)
+        XCTAssertEqual(resized.width, moved.width - 40, accuracy: 4)
+        XCTAssertEqual(resized.height, moved.height - 25, accuracy: 4)
+
+        // A vertical drag must move the car, rather than scroll the enclosing page.
+        let center = crop.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.5))
+        center.press(forDuration: 0.1, thenDragTo: center.withOffset(CGVector(dx: 0, dy: -30)),
+                     withVelocity: .slow, thenHoldForDuration: 0.1)
+        XCTAssertEqual(crop.frame.minX, resized.minX, accuracy: 2)
+        XCTAssertEqual(crop.frame.minY, resized.minY - 30, accuracy: 4)
+        XCTAssertEqual(crop.frame.size.width, resized.width, accuracy: 2)
+        XCTAssertEqual(crop.frame.size.height, resized.height, accuracy: 2)
+    }
+
     func testDetectedCarsSkipManualSelectionAndShowCatalogInfo() {
         launch(["-ui-fake-detector"])
         app.navigationBars.buttons["Add Photo"].tap()
