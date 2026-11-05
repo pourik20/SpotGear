@@ -320,7 +320,7 @@ struct PixelLoadingIndicator: View {
                 }
             }
             .accessibilityElement()
-            .accessibilityLabel("Načítám")
+            .accessibilityLabel("Loading")
         }
     }
 }
@@ -373,10 +373,10 @@ extension PixelEmptyState where Actions == EmptyView {
     }
 }
 
-#Preview("Komponenty") {
+#Preview("Components") {
     ScrollView {
         VStack(alignment: .leading, spacing: Spacing.large) {
-            PixelSectionTitle("Identifikace")
+            PixelSectionTitle("Identification")
             PixelProgressBar(value: 0.6)
             HStack {
                 PixelSprite(art: .heart)
@@ -385,8 +385,8 @@ extension PixelEmptyState where Actions == EmptyView {
                 PixelSprite(art: .trophy)
                 PixelSprite(art: .car, pixel: 3)
             }
-            Button("Přidat fotografii") {}.buttonStyle(PixelButtonStyle())
-            Button("Upravit") {}.buttonStyle(PixelButtonStyle(kind: .secondary))
+            Button("Add Photo") {}.buttonStyle(PixelButtonStyle())
+            Button("Edit") {}.buttonStyle(PixelButtonStyle(kind: .secondary))
             PixelLoadingIndicator()
         }
         .pixelPanel()

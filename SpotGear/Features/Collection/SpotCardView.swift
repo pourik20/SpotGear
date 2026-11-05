@@ -50,9 +50,9 @@ struct SpotCardView: View {
         if let detail = spot.identity?.detail { parts.append(detail) }
         let date = spot.displayDate.formatted(date: .long, time: .omitted)
         parts.append(spot.observedAt == nil
-            ? String(localized: "přidáno \(date)")
-            : String(localized: "spatřeno \(date)"))
-        if spot.isFavorite { parts.append(String(localized: "oblíbené")) }
+            ? String(localized: "added \(date)")
+            : String(localized: "spotted \(date)"))
+        if spot.isFavorite { parts.append(String(localized: "favorite")) }
         parts.append(String(localized: "\(spot.facts.xp) XP"))
         return parts.joined(separator: ", ")
     }

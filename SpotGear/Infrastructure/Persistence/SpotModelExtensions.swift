@@ -19,7 +19,7 @@ extension SchemaV1.Spot {
     }
 
     var displayTitle: String {
-        identity?.title ?? String(localized: "Neznámé auto")
+        identity?.title ?? String(localized: "Unknown Car")
     }
 
     /// Observation date when known, otherwise the date the spot was added.

@@ -56,7 +56,7 @@ struct CardImageContent: View {
             case .unavailable:
                 ZStack {
                     Theme.panelRaised
-                    Label("Fotografie není dostupná", systemImage: "exclamationmark.triangle")
+                    Label("Photo Unavailable", systemImage: "exclamationmark.triangle")
                         .font(.caption)
                         .foregroundStyle(Theme.textSecondary)
                         .multilineTextAlignment(.center)
@@ -88,10 +88,10 @@ struct RegionNumberBadge: View {
 extension RegionStatus {
     var title: LocalizedStringKey {
         switch self {
-        case .pending: "Čeká na kontrolu"
-        case .processing: "Zpracovávám…"
-        case .needsConfirmation: "Čeká na potvrzení"
-        case .confirmed: "Potvrzeno"
+        case .pending: "Awaiting Review"
+        case .processing: "Processing…"
+        case .needsConfirmation: "Awaiting Confirmation"
+        case .confirmed: "Confirmed"
         }
     }
 
@@ -120,7 +120,7 @@ extension CardStyle {
         switch self {
         case .pixel: "Pixel"
         case .cutout: "Studio"
-        case .photo: "Výřez"
+        case .photo: "Photo"
         }
     }
 
@@ -133,12 +133,12 @@ extension CardStyle {
 extension GarageRank {
     var title: LocalizedStringKey {
         switch self {
-        case .rookie: "Nováček"
-        case .watcher: "Pozorovatel"
-        case .hunter: "Lovec aut"
-        case .expert: "Znalec"
-        case .master: "Mistr garáže"
-        case .legend: "Legenda"
+        case .rookie: "Rookie"
+        case .watcher: "Spotter"
+        case .hunter: "Car Hunter"
+        case .expert: "Expert"
+        case .master: "Garage Master"
+        case .legend: "Legend"
         }
     }
 }
@@ -146,23 +146,23 @@ extension GarageRank {
 extension GarageQuest {
     var title: LocalizedStringKey {
         switch self {
-        case .firstSpot: "První úlovek"
-        case .collector: "Sběratel"
-        case .threeMakes: "Tři značky"
-        case .tenMakes: "Autosalon"
-        case .detective: "Detektiv"
-        case .favorites: "Srdcovky"
+        case .firstSpot: "First Spot"
+        case .collector: "Collector"
+        case .threeMakes: "Three Makes"
+        case .tenMakes: "Showroom"
+        case .detective: "Detective"
+        case .favorites: "Fan Favorites"
         }
     }
 
     var summary: LocalizedStringKey {
         switch self {
-        case .firstSpot: "Ulož své první auto."
-        case .collector: "Ulož 10 aut."
-        case .threeMakes: "Ulož auta 3 různých značek."
-        case .tenMakes: "Ulož auta 10 různých značek."
-        case .detective: "U 5 aut vyplň značku, model a generaci nebo rok."
-        case .favorites: "Označ 3 auta jako oblíbená."
+        case .firstSpot: "Save your first car."
+        case .collector: "Save 10 cars."
+        case .threeMakes: "Collect cars from 3 different makes."
+        case .tenMakes: "Collect cars from 10 different makes."
+        case .detective: "Add a make, model, and generation or year to 5 cars."
+        case .favorites: "Add 3 cars to your favorites."
         }
     }
 }
@@ -170,8 +170,8 @@ extension GarageQuest {
 extension IdentityValidationError {
     var message: String {
         switch self {
-        case .modelWithoutMake: String(localized: "Model, generaci ani rok nelze uložit bez značky.")
-        case .invalidYear: String(localized: "Rok zadejte jako čtyři číslice, například 2015.")
+        case .modelWithoutMake: String(localized: "Enter a make before adding a model, generation, or year.")
+        case .invalidYear: String(localized: "Enter a four-digit year, such as 2015.")
         }
     }
 }
@@ -183,6 +183,6 @@ extension CropRect {
         let top = Int((y * 100).rounded())
         let width = Int((self.width * 100).rounded())
         let height = Int((self.height * 100).rounded())
-        return String(localized: "Zleva \(left) %, shora \(top) %, šířka \(width) %, výška \(height) % fotografie")
+        return String(localized: "Left \(left)%, top \(top)%, width \(width)%, height \(height)% of the photo")
     }
 }

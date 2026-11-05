@@ -16,7 +16,7 @@ struct QuestsView: View {
             .padding()
         }
         .background(Theme.night.ignoresSafeArea())
-        .navigationTitle("Výzvy")
+        .navigationTitle("Quests")
         .navigationBarTitleDisplayMode(.inline)
     }
 }
@@ -55,7 +55,7 @@ private struct QuestRow: View {
         .pixelPanel(border: isCompleted ? Theme.gold : Theme.line)
         .accessibilityElement(children: .ignore)
         .accessibilityLabel(quest.title)
-        .accessibilityValue(isCompleted ? Text("Splněno") : Text("\(progress) z \(quest.goal)"))
+        .accessibilityValue(isCompleted ? Text("Completed") : Text("\(progress) of \(quest.goal)"))
         .accessibilityHint(quest.summary)
     }
 }

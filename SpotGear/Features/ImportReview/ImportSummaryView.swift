@@ -15,24 +15,24 @@ struct ImportSummaryView: View {
                     }
                     .disabled(isSaving)
                     .swipeActions {
-                        Button("Odebrat", systemImage: "trash", role: .destructive) {
+                        Button("Remove", systemImage: "trash", role: .destructive) {
                             session.removeRegion(region.id)
                         }
                     }
-                    .accessibilityAction(named: "Odebrat auto \(region.number)") {
+                    .accessibilityAction(named: "Remove car \(region.number)") {
                         session.removeRegion(region.id)
                     }
                 }
                 .listRowBackground(Theme.panel)
             } header: {
-                PixelSectionTitle("Zkontrolujte každé auto")
+                PixelSectionTitle("Review Each Car")
             } footer: {
                 VStack(alignment: .leading, spacing: 4) {
                     if session.unconfirmedCount > 0 {
-                        Text("Potvrďte nebo odeberte všechna auta. Zbývá potvrdit: \(session.unconfirmedCount).")
+                        Text("Confirm or remove every car before saving. Remaining: \(session.unconfirmedCount).")
                     }
                     if session.detection != nil, session.detection != .unavailable {
-                        Text("Auta našel lokální rozpoznávač. Chybí nějaké, třeba zakryté v pozadí? Přidáte ho přes „Upravit výběr“.")
+                        Text("Cars were detected on your device. Missing a car? Use Edit Selection to add it.")
                     }
                 }
             }
@@ -60,9 +60,9 @@ struct ImportSummaryView: View {
                 HStack(spacing: Spacing.small) {
                     if isSaving {
                         PixelLoadingIndicator()
-                        Text("Ukládám…")
+                        Text("Saving…")
                     } else {
-                        Text("Uložit \(session.regions.count) aut")
+                        Text("Save Cars (\(session.regions.count))")
                     }
                 }
                 .frame(maxWidth: .infinity)
@@ -72,12 +72,12 @@ struct ImportSummaryView: View {
             .accessibilityIdentifier("summary.save")
             .pixelBottomBar()
         }
-        .navigationTitle("Souhrn")
+        .navigationTitle("Review")
         .navigationBarTitleDisplayMode(.inline)
         .navigationBarBackButtonHidden()
         .toolbar {
             ToolbarItem(placement: .primaryAction) {
-                Button("Upravit výběr") { session.returnToSelection() }
+                Button("Edit Selection") { session.returnToSelection() }
                     .disabled(isSaving)
             }
         }
@@ -94,7 +94,7 @@ private struct RegionSummaryRow: View {
                 .frame(width: 96)
                 .accessibilityHidden(true)
             VStack(alignment: .leading, spacing: 4) {
-                Text("Auto \(region.number)")
+                Text("Car \(region.number)")
                     .font(.pixelLabel)
                     .foregroundStyle(Theme.textSecondary)
                 Text(verbatim: title)
@@ -112,10 +112,10 @@ private struct RegionSummaryRow: View {
 
     private var title: String {
         if let identity = region.confirmedIdentity { return identity.title }
-        if region.status == .confirmed { return String(localized: "Neznámé auto") }
+        if region.status == .confirmed { return String(localized: "Unknown Car") }
         if let candidate = region.identification.candidates.first {
-            return String(localized: "Návrh: \(candidate.identity.title)")
+            return String(localized: "Suggested: \(candidate.identity.title)")
         }
-        return String(localized: "Nepotvrzeno")
+        return String(localized: "Not Confirmed")
     }
 }

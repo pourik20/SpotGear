@@ -11,7 +11,7 @@ struct IdentityFormFields: View {
             .textFieldStyle(PixelTextFieldStyle())
 
         if !input.hasMake {
-            Text("Bez značky se auto uloží jako neznámé. Údaje můžete doplnit později.")
+            Text("Leave the make blank to save this as an unknown car. You can add details later.")
                 .font(.footnote)
                 .foregroundStyle(Theme.textSecondary)
         }
@@ -25,7 +25,7 @@ struct IdentityFormFields: View {
 
     @ViewBuilder
     private var fields: some View {
-        TextField("Značka", text: $input.make)
+        TextField("Make", text: $input.make)
             .textInputAutocapitalization(.words)
             .autocorrectionDisabled()
             .accessibilityIdentifier("identity.make")
@@ -34,11 +34,11 @@ struct IdentityFormFields: View {
             .autocorrectionDisabled()
             .disabled(!input.hasMake)
             .accessibilityIdentifier("identity.model")
-        TextField("Generace (nepovinné)", text: $input.generation)
+        TextField("Generation (optional)", text: $input.generation)
             .autocorrectionDisabled()
             .disabled(!input.hasMake)
             .accessibilityIdentifier("identity.generation")
-        TextField("Rok (nepovinné)", text: $input.yearText)
+        TextField("Year (optional)", text: $input.yearText)
             .keyboardType(.numberPad)
             .disabled(!input.hasMake)
             .accessibilityIdentifier("identity.year")

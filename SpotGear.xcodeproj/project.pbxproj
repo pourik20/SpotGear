@@ -187,10 +187,10 @@
 				};
 			};
 			buildConfigurationList = 000000000000000010000000 /* Build configuration list for PBXProject "SpotGear" */;
-			developmentRegion = cs;
+			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
-				cs,
+				en,
 				Base,
 			);
 			mainGroup = 000000000000000000000001;
@@ -392,7 +392,7 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_CFBundleDisplayName = SpotGear;
-				INFOPLIST_KEY_NSCameraUsageDescription = "Fotoaparát slouží k pořízení fotografie auta, které chcete uložit do své sbírky. Fotografie zůstává v zařízení.";
+				INFOPLIST_KEY_NSCameraUsageDescription = "Take photos of cars to add to your collection. Photos stay on your device.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -426,7 +426,7 @@
 				EXCLUDED_SOURCE_FILE_NAMES = tesla.jpeg;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_CFBundleDisplayName = SpotGear;
-				INFOPLIST_KEY_NSCameraUsageDescription = "Fotoaparát slouží k pořízení fotografie auta, které chcete uložit do své sbírky. Fotografie zůstává v zařízení.";
+				INFOPLIST_KEY_NSCameraUsageDescription = "Take photos of cars to add to your collection. Photos stay on your device.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;

@@ -36,23 +36,23 @@ struct CollectionView: View {
             .padding(.bottom, Spacing.large)
         }
         .background(Theme.night.ignoresSafeArea())
-        .navigationTitle("Sbírka")
+        .navigationTitle("Collection")
         .navigationBarTitleDisplayMode(.inline)
-        .searchable(text: $searchText, placement: .navigationBarDrawer(displayMode: .always), prompt: Text("Hledat značku nebo model"))
+        .searchable(text: $searchText, placement: .navigationBarDrawer(displayMode: .always), prompt: Text("Search make or model"))
         .toolbar {
             ToolbarItem(placement: .topBarLeading) {
                 NavigationLink(value: AppRoute.settings) {
-                    Label("Nastavení", systemImage: "gearshape")
+                    Label("Settings", systemImage: "gearshape")
                 }
             }
             ToolbarItemGroup(placement: .topBarTrailing) {
                 Toggle(isOn: $favoritesOnly) {
-                    Label("Jen oblíbené", systemImage: favoritesOnly ? "heart.fill" : "heart")
+                    Label("Favorites Only", systemImage: favoritesOnly ? "heart.fill" : "heart")
                 }
                 .toggleStyle(.button)
                 .accessibilityIdentifier("collection.favoritesOnly")
                 AddPhotoMenu(actions: actions) {
-                    Label("Přidat fotografii", systemImage: "plus")
+                    Label("Add Photo", systemImage: "plus")
                 }
             }
         }
@@ -85,25 +85,25 @@ struct CollectionView: View {
     private var content: some View {
         if spots.isEmpty {
             PixelEmptyState(
-                title: "Zatím žádná auta",
-                message: "Vyfoťte auto nebo vyberte fotografii z knihovny. Na jedné fotografii můžete označit i více aut."
+                title: "Your Garage Starts Here",
+                message: "Take a photo or choose one from your library. You can collect multiple cars from a single photo."
             ) {
                 AddPhotoMenu(actions: actions) {
-                    Text("Přidat fotografii")
+                    Text("Add Photo")
                 }
                 .buttonStyle(PixelButtonStyle())
             }
         } else if filteredSpots.isEmpty {
             if searchText.isEmpty {
                 PixelEmptyState(
-                    title: "Žádná oblíbená auta",
-                    message: "Auto označíte jako oblíbené v jeho detailu.",
+                    title: "No Favorites Yet",
+                    message: "Open a car's details to add it to your favorites.",
                     art: .heartEmpty
                 )
             } else {
                 PixelEmptyState(
-                    title: "Nic jsme nenašli",
-                    message: "Zkuste hledat jinou značku nebo model."
+                    title: "No Results",
+                    message: "Try a different make or model."
                 )
             }
         } else {

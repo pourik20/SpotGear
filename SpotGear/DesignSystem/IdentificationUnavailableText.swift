@@ -7,15 +7,15 @@ struct IdentificationUnavailableText: View {
     var body: some View {
         switch reason {
         case .modelMissing, .invalidManifest, .unsupportedModel:
-            Text("Automatická identifikace není v této verzi dostupná. Údaje můžete doplnit ručně.")
+            Text("Automatic identification isn't available in this version. You can enter the details manually.")
         case .systemUnsupported:
-            Text("Automatická identifikace vyžaduje iOS 27 a zařízení s Apple Intelligence. Údaje můžete doplnit ručně.")
+            Text("Automatic identification requires iOS 27 and a device with Apple Intelligence. You can enter the details manually.")
         case .deviceNotEligible:
-            Text("Toto zařízení nepodporuje Apple Intelligence, automatická identifikace proto není dostupná. Údaje můžete doplnit ručně.")
+            Text("This device doesn't support Apple Intelligence. You can enter the details manually.")
         case .appleIntelligenceDisabled:
-            Text("Pro návrhy zapněte Apple Intelligence v Nastavení systému. Do té doby můžete údaje doplnit ručně.")
+            Text("Turn on Apple Intelligence in Settings to get suggestions. You can also enter the details manually.")
         case .modelNotReady:
-            Text("Model Apple Intelligence se v zařízení ještě připravuje. Zkuste to později, nebo údaje doplňte ručně.")
+            Text("Apple Intelligence is still being prepared on this device. Try again later or enter the details manually.")
         }
     }
 }

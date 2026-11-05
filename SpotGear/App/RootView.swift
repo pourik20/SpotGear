@@ -59,10 +59,10 @@ struct RootView: View {
             Alert(
                 title: Text(problem.title),
                 message: Text(problem.message),
-                primaryButton: .default(Text("Vybrat z knihovny")) { showsPhotoPicker = true },
+                primaryButton: .default(Text("Choose from Library")) { showsPhotoPicker = true },
                 secondaryButton: problem == .denied
-                    ? .default(Text("Otevřít Nastavení")) { openSettings() }
-                    : .cancel(Text("Zavřít"))
+                    ? .default(Text("Open Settings")) { openSettings() }
+                    : .cancel(Text("Close"))
             )
         }
         .alert(
@@ -70,8 +70,8 @@ struct RootView: View {
             isPresented: Binding(get: { importError != nil }, set: { if !$0 { importError = nil } }),
             presenting: importError
         ) { _ in
-            Button("Vybrat jinou fotografii") { showsPhotoPicker = true }
-            Button("Zavřít", role: .cancel) {}
+            Button("Choose Another Photo") { showsPhotoPicker = true }
+            Button("Close", role: .cancel) {}
         } message: { error in
             Text(error.message)
         }
@@ -148,17 +148,17 @@ enum CameraProblem: String, Identifiable {
 
     var title: String {
         switch self {
-        case .unavailable: String(localized: "Fotoaparát není dostupný")
-        case .denied: String(localized: "Přístup k fotoaparátu není povolen")
+        case .unavailable: String(localized: "Camera Unavailable")
+        case .denied: String(localized: "Camera Access Required")
         }
     }
 
     var message: String {
         switch self {
         case .unavailable:
-            String(localized: "Na tomto zařízení nelze použít fotoaparát. Fotografii můžete vybrat z knihovny.")
+            String(localized: "The camera isn't available on this device. Choose a photo from your library instead.")
         case .denied:
-            String(localized: "Přístup k fotoaparátu můžete povolit v Nastavení. Mezitím můžete vybrat fotografii z knihovny.")
+            String(localized: "Allow camera access in Settings, or choose a photo from your library.")
         }
     }
 }
@@ -167,9 +167,9 @@ enum CameraProblem: String, Identifiable {
 struct StoreErrorView: View {
     var body: some View {
         ContentUnavailableView {
-            Label("Sbírku nelze otevřít", systemImage: "externaldrive.badge.exclamationmark")
+            Label("Unable to Open Collection", systemImage: "externaldrive.badge.exclamationmark")
         } description: {
-            Text("Databázi sbírky se nepodařilo otevřít. Data nebyla smazána ani přepsána. Zkuste aplikaci ukončit a spustit znovu, případně ji aktualizovat.")
+            Text("Couldn't open your collection's database. Your data hasn't been deleted or overwritten. Try restarting or updating the app.")
         }
     }
 }
@@ -190,7 +190,7 @@ private struct RootPreview: View {
                     .environment(services)
                     .modelContainer(services.container)
             case .failure(let error):
-                ContentUnavailableView("Náhled nelze otevřít", systemImage: "exclamationmark.triangle",
+                ContentUnavailableView("Unable to Open Preview", systemImage: "exclamationmark.triangle",
                                        description: Text(error.localizedDescription))
             }
         }
@@ -200,7 +200,7 @@ private struct RootPreview: View {
     }
 }
 
-#Preview("SpotGear – Sbírka") {
+#Preview("SpotGear – Collection") {
     RootPreview()
 }
 #endif

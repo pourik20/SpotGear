@@ -20,7 +20,7 @@ struct ImportFlowView: View {
                 .toolbar {
                     if session.phase != .saving {
                         ToolbarItem(placement: .cancellationAction) {
-                            Button("Zrušit") {
+                            Button("Cancel") {
                                 if session.regions.isEmpty { cancel() } else { confirmsCancel = true }
                             }
                             .accessibilityIdentifier("import.cancel")
@@ -38,11 +38,11 @@ struct ImportFlowView: View {
         .onChange(of: session.loadError) { _, error in
             if let error { onFinish(.failed(error)) }
         }
-        .confirmationDialog("Zahodit rozpracovaný import?", isPresented: $confirmsCancel, titleVisibility: .visible) {
-            Button("Zahodit", role: .destructive, action: cancel)
-            Button("Pokračovat v úpravách", role: .cancel) {}
+        .confirmationDialog("Discard This Import?", isPresented: $confirmsCancel, titleVisibility: .visible) {
+            Button("Discard", role: .destructive, action: cancel)
+            Button("Keep Editing", role: .cancel) {}
         } message: {
-            Text("Označená auta se neuloží.")
+            Text("The selected cars won't be saved.")
         }
     }
 
@@ -52,13 +52,13 @@ struct ImportFlowView: View {
         case .idle, .loading:
             VStack(spacing: Spacing.large) {
                 PixelLoadingIndicator()
-                Text("Načítám fotografii…")
+                Text("Loading photo…")
                     .font(.pixelHeadline)
                     .foregroundStyle(Theme.textSecondary)
             }
             .frame(maxWidth: .infinity, maxHeight: .infinity)
             .background(Theme.night.ignoresSafeArea())
-            .navigationTitle("Nová fotografie")
+            .navigationTitle("New Photo")
             .navigationBarTitleDisplayMode(.inline)
         case .detecting:
             DetectingView(image: session.workingImage)
@@ -92,7 +92,7 @@ private struct DetectingView: View {
             }
             HStack(spacing: Spacing.small) {
                 PixelLoadingIndicator()
-                Text("Hledám auta na fotografii…")
+                Text("Detecting cars…")
                     .font(.pixelHeadline)
                     .foregroundStyle(Theme.textSecondary)
             }
@@ -100,7 +100,7 @@ private struct DetectingView: View {
         .padding()
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .background(Theme.night.ignoresSafeArea())
-        .navigationTitle("Nová fotografie")
+        .navigationTitle("New Photo")
         .navigationBarTitleDisplayMode(.inline)
     }
 }

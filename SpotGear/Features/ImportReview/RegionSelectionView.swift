@@ -37,7 +37,7 @@ struct RegionSelectionView: View {
 
                 if !session.regions.isEmpty {
                     VStack(alignment: .leading, spacing: Spacing.small) {
-                        PixelSectionTitle("Označená auta")
+                        PixelSectionTitle("Selected Cars")
                         ForEach(session.regions) { region in
                             RegionRow(
                                 region: region,
@@ -62,7 +62,7 @@ struct RegionSelectionView: View {
                         focusedRegion = id
                     }
                 } label: {
-                    Label("Přidat auto", systemImage: "plus.viewfinder")
+                    Label("Add Car", systemImage: "plus.viewfinder")
                         .frame(maxWidth: .infinity)
                 }
                 .buttonStyle(PixelButtonStyle(kind: .secondary))
@@ -72,7 +72,7 @@ struct RegionSelectionView: View {
                 Button {
                     session.proceedToReview()
                 } label: {
-                    Text("Pokračovat")
+                    Text("Continue")
                         .frame(maxWidth: .infinity)
                 }
                 .buttonStyle(PixelButtonStyle())
@@ -81,7 +81,7 @@ struct RegionSelectionView: View {
             }
             .pixelBottomBar()
         }
-        .navigationTitle("Označte auta")
+        .navigationTitle("Select Cars")
         .navigationBarTitleDisplayMode(.inline)
         .onAppear {
             if selectedID == nil { selectedID = session.regions.last?.id }
@@ -91,11 +91,11 @@ struct RegionSelectionView: View {
     private var emptyHint: LocalizedStringKey {
         switch session.detection {
         case .found(let boxes) where boxes.isEmpty:
-            "Na fotografii jsem žádné auto nenašel. Klepněte na „Přidat auto“ a rámeček posuňte na auto, které chcete uložit."
+            "No cars were detected. Tap Add Car and position the frame over the car you want to save."
         case .unavailable:
-            "Automatické hledání aut není na tomto zařízení dostupné. Klepněte na „Přidat auto“ a rámeček posuňte na auto, které chcete uložit."
+            "Automatic detection isn't available on this device. Tap Add Car and position the frame over the car you want to save."
         case .found, nil:
-            "Klepněte na „Přidat auto“ a rámeček posuňte na auto, které chcete uložit. Na jedné fotografii můžete označit až 10 aut."
+            "Tap Add Car and position the frame over the car you want to save. You can select up to 10 cars in one photo."
         }
     }
 
@@ -125,11 +125,11 @@ private struct RegionRow: View {
         HStack(spacing: Spacing.small) {
             RegionNumberBadge(number: region.number, isSelected: isSelected)
             VStack(alignment: .leading, spacing: 2) {
-                Text("Auto \(region.number)")
+                Text("Car \(region.number)")
                     .font(.pixelHeadline)
                     .foregroundStyle(Theme.text)
                 if isSelected {
-                    Text("Vybráno k úpravě").font(.caption).foregroundStyle(Theme.textSecondary)
+                    Text("Selected for editing").font(.caption).foregroundStyle(Theme.textSecondary)
                 }
                 RegionStatusLabel(status: region.status)
             }
@@ -139,18 +139,18 @@ private struct RegionRow: View {
 
     @ViewBuilder
     private var buttons: some View {
-        Button("Upravit", systemImage: "arrow.up.and.down.and.arrow.left.and.right", action: onSelect)
+        Button("Edit", systemImage: "arrow.up.and.down.and.arrow.left.and.right", action: onSelect)
             .labelStyle(.iconOnly)
             .frame(minWidth: Spacing.minimumTapTarget, minHeight: Spacing.minimumTapTarget)
-            .accessibilityLabel("Upravit polohu auta \(region.number)")
-        Button("Potvrdit", action: onConfirm)
+            .accessibilityLabel("Adjust car \(region.number) position")
+        Button("Confirm", action: onConfirm)
             .buttonStyle(PixelButtonStyle())
-            .accessibilityLabel("Potvrdit auto \(region.number)")
+            .accessibilityLabel("Confirm car \(region.number)")
             .accessibilityIdentifier("regions.confirm.\(region.number)")
-        Button("Odebrat", systemImage: "trash", role: .destructive, action: onRemove)
+        Button("Remove", systemImage: "trash", role: .destructive, action: onRemove)
             .labelStyle(.iconOnly)
             .frame(minWidth: Spacing.minimumTapTarget, minHeight: Spacing.minimumTapTarget)
-            .accessibilityLabel("Odebrat auto \(region.number)")
+            .accessibilityLabel("Remove car \(region.number)")
     }
 }
 
@@ -164,7 +164,7 @@ struct RegionAdjustControls: View {
 
     var body: some View {
         VStack(alignment: .leading, spacing: Spacing.small) {
-            PixelSectionTitle("Poloha auta \(region.number)")
+            PixelSectionTitle("Car \(region.number) position")
             Text(verbatim: region.crop.accessibilityDescription)
                 .font(.footnote)
                 .foregroundStyle(Theme.textSecondary)
@@ -173,14 +173,14 @@ struct RegionAdjustControls: View {
                 alignment: .leading,
                 spacing: Spacing.small
             ) {
-                adjust("Posunout vlevo", "arrow.left") { $0.moved(dx: -Self.step, dy: 0) }
-                adjust("Posunout vpravo", "arrow.right") { $0.moved(dx: Self.step, dy: 0) }
-                adjust("Posunout nahoru", "arrow.up") { $0.moved(dx: 0, dy: -Self.step) }
-                adjust("Posunout dolů", "arrow.down") { $0.moved(dx: 0, dy: Self.step) }
-                adjust("Širší", "arrow.left.and.right") { $0.resized(dWidth: Self.step, dHeight: 0) }
-                adjust("Užší", "arrow.right.and.line.vertical.and.arrow.left") { $0.resized(dWidth: -Self.step, dHeight: 0) }
-                adjust("Vyšší", "arrow.up.and.down") { $0.resized(dWidth: 0, dHeight: Self.step) }
-                adjust("Nižší", "arrow.down.and.line.horizontal.and.arrow.up") { $0.resized(dWidth: 0, dHeight: -Self.step) }
+                adjust("Move Left", "arrow.left") { $0.moved(dx: -Self.step, dy: 0) }
+                adjust("Move Right", "arrow.right") { $0.moved(dx: Self.step, dy: 0) }
+                adjust("Move Up", "arrow.up") { $0.moved(dx: 0, dy: -Self.step) }
+                adjust("Move Down", "arrow.down") { $0.moved(dx: 0, dy: Self.step) }
+                adjust("Wider", "arrow.left.and.right") { $0.resized(dWidth: Self.step, dHeight: 0) }
+                adjust("Narrower", "arrow.right.and.line.vertical.and.arrow.left") { $0.resized(dWidth: -Self.step, dHeight: 0) }
+                adjust("Taller", "arrow.up.and.down") { $0.resized(dWidth: 0, dHeight: Self.step) }
+                adjust("Shorter", "arrow.down.and.line.horizontal.and.arrow.up") { $0.resized(dWidth: 0, dHeight: -Self.step) }
             }
         }
     }

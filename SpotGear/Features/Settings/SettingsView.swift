@@ -8,25 +8,25 @@ struct SettingsView: View {
 
     var body: some View {
         Form {
-            Section("Offline režim") {
-                Text("SpotGear funguje bez internetu, účtu i serveru. Fotografie, sbírka i jejich zpracování zůstávají v tomto zařízení.")
+            Section("Offline by Design") {
+                Text("SpotGear works without an internet connection, account, or server. Your photos and collection are stored and processed on this device.")
             }
             .listRowBackground(Theme.panel)
 
-            Section("Identifikace aut") {
+            Section("Car Identification") {
                 identificationStatus
-                Text("Odstranění pozadí probíhá lokálně pomocí systémového rozhraní Vision, pokud jej zařízení podporuje. Jinak karta použije fotografický výřez.")
+                Text("Backgrounds are removed on your device using Apple's Vision framework where supported. Otherwise, cards use a photo crop.")
                     .foregroundStyle(Theme.textSecondary)
             }
             .listRowBackground(Theme.panel)
 
             Section("Pixel art") {
-                Text("Pixelové karty vznikají přímo ve vašem zařízení zmenšením vlastní fotografie a omezením barev. Nic se negeneruje ani neodesílá a původní fotografie zůstává beze změny.")
+                Text("Pixel cards are created on your device by reducing your photo's resolution and color palette. No generative AI or uploads are involved, and the original photo is preserved.")
             }
             .listRowBackground(Theme.panel)
 
-            Section("Data a zálohy") {
-                Text("Sbírka je uložena v datech aplikace v tomto zařízení. Může být součástí systémové zálohy do iCloudu nebo počítače. Odinstalováním aplikace se sbírka smaže.")
+            Section("Data & Backups") {
+                Text("Your collection is stored on this device and may be included in iCloud or computer backups. Deleting the app also deletes your collection.")
             }
             .listRowBackground(Theme.panel)
 
@@ -35,7 +35,7 @@ struct SettingsView: View {
                     confirmsDeleteAll = true
                 } label: {
                     HStack {
-                        Label("Smazat celou sbírku", systemImage: "trash")
+                        Label("Delete Collection", systemImage: "trash")
                         if isDeleting { Spacer(); PixelLoadingIndicator() }
                     }
                 }
@@ -43,19 +43,19 @@ struct SettingsView: View {
                 .accessibilityIdentifier("settings.deleteAll")
             } footer: {
                 if deleteFailed {
-                    Text("Sbírku se nepodařilo smazat. Data zůstala beze změny.")
+                    Text("Couldn't delete the collection. Your data is unchanged.")
                         .foregroundStyle(Theme.danger)
                 }
             }
             .listRowBackground(Theme.panel)
         }
         .pixelListBackground()
-        .navigationTitle("Nastavení")
-        .confirmationDialog("Smazat celou sbírku?", isPresented: $confirmsDeleteAll, titleVisibility: .visible) {
-            Button("Smazat všechna auta a fotografie", role: .destructive, action: deleteAll)
-            Button("Zrušit", role: .cancel) {}
+        .navigationTitle("Settings")
+        .confirmationDialog("Delete Your Collection?", isPresented: $confirmsDeleteAll, titleVisibility: .visible) {
+            Button("Delete All Cars and Photos", role: .destructive, action: deleteAll)
+            Button("Cancel", role: .cancel) {}
         } message: {
-            Text("Odstraní se všechny karty, poznámky i uložené fotografie. Tuto akci nelze vrátit.")
+            Text("All cards, notes, and saved photos will be permanently deleted.")
         }
     }
 
@@ -63,11 +63,11 @@ struct SettingsView: View {
     private var identificationStatus: some View {
         switch services.identifier.availability {
         case .available where services.identifier.descriptor.providerID.hasPrefix("debug."):
-            Label("Ladicí sestavení: testovací návrhy, nejde o skutečné rozpoznávání.", systemImage: "testtube.2")
+            Label("Debug build: sample suggestions are shown instead of real identification results.", systemImage: "testtube.2")
         case .available where services.identifier.descriptor.providerID == SystemModelVehicleIdentifier.providerID:
-            Label("Návrhy značky a modelu vytváří Apple Intelligence přímo v zařízení, bez odesílání fotografií. Mohou být nepřesné, proto je vždy potvrzujete sami.", systemImage: "checkmark.circle")
+            Label("Apple Intelligence suggests a make and model on your device without uploading photos. Suggestions may be inaccurate, so you always review and confirm them.", systemImage: "checkmark.circle")
         case .available:
-            Label("Lokální identifikační model je k dispozici. Návrhy vždy potvrzujete sami.", systemImage: "checkmark.circle")
+            Label("An on-device identification model is available. You always review and confirm its suggestions.", systemImage: "checkmark.circle")
         case .unavailable(let reason):
             Label { IdentificationUnavailableText(reason: reason) } icon: { Image(systemName: "info.circle") }
         }

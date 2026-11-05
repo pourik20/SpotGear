@@ -13,7 +13,7 @@ struct VehicleInsightPanel: View {
 
     var body: some View {
         VStack(alignment: .leading, spacing: Spacing.medium) {
-            PixelSectionTitle("O autě")
+            PixelSectionTitle("About This Car")
             if let insight {
                 catalogContent(insight)
             } else {
@@ -30,7 +30,7 @@ struct VehicleInsightPanel: View {
     @ViewBuilder
     private func catalogContent(_ insight: VehicleInsight) -> some View {
         VStack(alignment: .leading, spacing: 2) {
-            Text("Orientační cena ojetého auta")
+            Text("Estimated Used Price")
                 .font(.caption)
                 .foregroundStyle(Theme.textSecondary)
             Text(verbatim: VehiclePriceFormat.range(insight.priceCZK))
@@ -41,42 +41,42 @@ struct VehicleInsightPanel: View {
         .accessibilityElement(children: .combine)
 
         if let generation = insight.generation {
-            LabeledContent("Generace") { Text(verbatim: generation) }
+            LabeledContent("Generation") { Text(verbatim: generation) }
         }
-        LabeledContent("Vyráběno") { Text(verbatim: years(insight)) }
+        LabeledContent("Production Years") { Text(verbatim: years(insight)) }
         if let bodyStyle = insight.bodyStyle {
-            LabeledContent("Karoserie") { Text(verbatim: bodyStyle) }
+            LabeledContent("Body Style") { Text(verbatim: bodyStyle) }
         }
         if let powertrain = insight.powertrain {
-            LabeledContent("Pohon") { Text(verbatim: powertrain) }
+            LabeledContent("Powertrain") { Text(verbatim: powertrain) }
         }
         if let power = insight.powerKW {
-            LabeledContent("Výkon") { Text(verbatim: "\(power.lowerBound)–\(power.upperBound) kW") }
+            LabeledContent("Power") { Text(verbatim: "\(power.lowerBound)–\(power.upperBound) kW") }
         }
 
         if !insight.isGenerationSpecific {
-            Text("Údaje platí pro všechny generace v katalogu. Generace nebo rok je zpřesní.")
+            Text("These figures cover all cataloged generations. Add a generation or year for more specific details.")
                 .font(.footnote)
                 .foregroundStyle(Theme.textSecondary)
         }
-        Text("Hrubý odhad z katalogu v aplikaci (stav \(catalog.priceDate)). Skutečná cena záleží na stavu, nájezdu a výbavě. Údaje se týkají typu auta, ne tohoto kusu.")
+        Text("Rough catalog estimate as of \(catalog.priceDate). Actual prices depend on condition, mileage, and equipment. These figures describe the model, not this specific car.")
             .font(.footnote)
             .foregroundStyle(Theme.textSecondary)
     }
 
     @ViewBuilder
     private var missingContent: some View {
-        Text("Toto auto v katalogu aplikace zatím není, takže cenu ani technické údaje neuvádím.")
+        Text("This car isn't in the catalog yet. Price estimates and specifications are unavailable.")
             .foregroundStyle(Theme.textSecondary)
         if isClassifying {
             HStack(spacing: Spacing.small) {
                 PixelLoadingIndicator()
-                Text("Odhaduji cenovou kategorii…").foregroundStyle(Theme.textSecondary)
+                Text("Estimating price category…").foregroundStyle(Theme.textSecondary)
             }
         } else if let priceClass {
-            LabeledContent("Cenová kategorie") { Text(title(of: priceClass)) }
+            LabeledContent("Price Category") { Text(title(of: priceClass)) }
                 .accessibilityIdentifier("insight.priceClass")
-            Text("Hrubý odhad modelu Apple Intelligence v zařízení, může být nepřesný.")
+            Text("A rough estimate from Apple Intelligence on your device. It may be inaccurate.")
                 .font(.footnote)
                 .foregroundStyle(Theme.textSecondary)
         }
@@ -84,17 +84,17 @@ struct VehicleInsightPanel: View {
 
     private func years(_ insight: VehicleInsight) -> String {
         if let to = insight.yearTo { return "\(insight.yearFrom)–\(to)" }
-        return String(localized: "od \(String(insight.yearFrom))")
+        return String(localized: "Since \(String(insight.yearFrom))")
     }
 
     private func title(of priceClass: VehiclePriceClass) -> LocalizedStringKey {
         switch priceClass {
-        case .budget: "Levná"
-        case .mainstream: "Běžná"
-        case .premium: "Prémiová"
-        case .luxury: "Luxusní"
-        case .supercar: "Superauta"
-        case .collectible: "Sběratelská"
+        case .budget: "Budget"
+        case .mainstream: "Mainstream"
+        case .premium: "Premium"
+        case .luxury: "Luxury"
+        case .supercar: "Supercar"
+        case .collectible: "Collectible"
         }
     }
 

@@ -14,10 +14,10 @@ struct AddPhotoMenu<MenuLabel: View>: View {
 
     var body: some View {
         Menu {
-            Button("Vyfotit", systemImage: "camera", action: actions.takePhoto)
-            Button("Vybrat z knihovny", systemImage: "photo.on.rectangle", action: actions.choosePhoto)
+            Button("Take Photo", systemImage: "camera", action: actions.takePhoto)
+            Button("Choose from Library", systemImage: "photo.on.rectangle", action: actions.choosePhoto)
             if let useTestPhoto = actions.useTestPhoto {
-                Button("Testovací fotografie", systemImage: "testtube.2", action: useTestPhoto)
+                Button("Sample Photo", systemImage: "testtube.2", action: useTestPhoto)
                     .accessibilityIdentifier("add.testPhoto")
             }
         } label: {

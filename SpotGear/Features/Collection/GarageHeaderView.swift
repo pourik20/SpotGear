@@ -46,16 +46,16 @@ struct GarageHeaderView: View {
             .accessibilityElement(children: .combine)
 
             PixelProgressBar(value: progress.levelProgress)
-                .accessibilityLabel("Postup na další úroveň")
-                .accessibilityValue(Text("\(progress.xpIntoLevel) z \(progress.xpForLevel) XP"))
+                .accessibilityLabel("Progress to next level")
+                .accessibilityValue(Text("\(progress.xpIntoLevel) of \(progress.xpForLevel) XP"))
 
             HStack(spacing: Spacing.small) {
-                GarageStat(value: progress.spotCount, label: "Aut")
-                GarageStat(value: progress.makeCount, label: "Značek")
+                GarageStat(value: progress.spotCount, label: "Cars")
+                GarageStat(value: progress.makeCount, label: "Makes")
                 NavigationLink(value: AppRoute.quests) {
                     GarageStat(
                         value: progress.completedQuestCount,
-                        label: "Výzev",
+                        label: "Quests",
                         total: GarageQuest.allCases.count
                     )
                 }
@@ -80,7 +80,7 @@ struct GarageHeaderView: View {
             PixelCornerShape().strokeBorder(Theme.goldDark, lineWidth: Spacing.border)
         }
         .accessibilityElement(children: .ignore)
-        .accessibilityLabel("Úroveň \(progress.level)")
+        .accessibilityLabel("Level \(progress.level)")
     }
 }
 
@@ -122,9 +122,9 @@ struct GarageReward: Equatable {
 
     var announcement: String {
         if let newLevel {
-            String(localized: "Získáno \(xp) XP. Nová úroveň \(newLevel).")
+            String(localized: "Earned \(xp) XP. Reached level \(newLevel).")
         } else {
-            String(localized: "Získáno \(xp) XP.")
+            String(localized: "Earned \(xp) XP.")
         }
     }
 }
@@ -139,7 +139,7 @@ struct GarageRewardBanner: View {
                 Text(verbatim: "+\(reward.xp) XP")
                     .font(.pixelValue)
                 if let level = reward.newLevel {
-                    Text("Nová úroveň \(level)!")
+                    Text("Level \(level) Unlocked!")
                         .font(.pixelHeadline)
                 }
             }

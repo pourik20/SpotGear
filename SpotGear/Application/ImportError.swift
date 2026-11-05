@@ -30,23 +30,23 @@ enum ImportError: Error, Equatable, Sendable {
 
     var title: String {
         switch self {
-        case .unreadableImage: String(localized: "Soubor nelze otevřít")
-        case .insufficientSpace: String(localized: "Nedostatek místa")
-        case .photoUnavailable: String(localized: "Fotografie není dostupná")
-        case .saveFailed: String(localized: "Uložení se nezdařilo")
+        case .unreadableImage: String(localized: "Unable to Open File")
+        case .insufficientSpace: String(localized: "Not Enough Storage")
+        case .photoUnavailable: String(localized: "Photo Unavailable")
+        case .saveFailed: String(localized: "Unable to Save")
         }
     }
 
     var message: String {
         switch self {
         case .unreadableImage:
-            String(localized: "Vybraný soubor se nepodařilo přečíst jako fotografii. Může být poškozený. Vyberte prosím jinou fotografii.")
+            String(localized: "The selected file couldn't be read as a photo. It may be damaged. Please choose another photo.")
         case .insufficientSpace:
-            String(localized: "V zařízení není dost volného místa. Uvolněte místo a zkuste to znovu. Uložená sbírka zůstala beze změny.")
+            String(localized: "There isn't enough free storage. Free up some space and try again. Your saved collection is unchanged.")
         case .photoUnavailable:
-            String(localized: "Fotografii se nepodařilo načíst. Pokud je uložená jen na iCloudu a zařízení je offline, připojte se k internetu nebo vyberte jinou fotografii.")
+            String(localized: "Couldn't load the photo. If it's stored only in iCloud, connect to the internet or choose another photo.")
         case .saveFailed:
-            String(localized: "Auta se nepodařilo uložit. Sbírka zůstala beze změny a můžete to zkusit znovu.")
+            String(localized: "Couldn't save the cars. Your collection is unchanged. Please try again.")
         }
     }
 

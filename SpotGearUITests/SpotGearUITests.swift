@@ -15,14 +15,14 @@ final class SpotGearUITests: XCTestCase {
     }
 
     private func importTestPhoto() {
-        app.navigationBars.buttons["Přidat fotografii"].tap()
-        app.buttons["Testovací fotografie"].tap()
+        app.navigationBars.buttons["Add Photo"].tap()
+        app.buttons["Sample Photo"].tap()
         XCTAssertTrue(app.buttons["regions.add"].waitForExistence(timeout: 10))
     }
 
     private func openSummaryRow(_ index: Int) {
         // Matched by label: the collection under the import sheet also exposes cells.
-        let row = app.buttons.matching(NSPredicate(format: "label BEGINSWITH %@", "Auto \(index + 1),")).firstMatch
+        let row = app.buttons.matching(NSPredicate(format: "label BEGINSWITH %@", "Car \(index + 1),")).firstMatch
         XCTAssertTrue(row.waitForExistence(timeout: 5))
         row.tap()
     }
@@ -79,8 +79,8 @@ final class SpotGearUITests: XCTestCase {
 
     func testDetectedCarsSkipManualSelectionAndShowCatalogInfo() {
         launch(["-ui-fake-detector"])
-        app.navigationBars.buttons["Přidat fotografii"].tap()
-        app.buttons["Testovací fotografie"].tap()
+        app.navigationBars.buttons["Add Photo"].tap()
+        app.buttons["Sample Photo"].tap()
 
         openSummaryRow(0)
         let make = scrolledTo(app.textFields["identity.make"])
@@ -128,8 +128,8 @@ final class SpotGearUITests: XCTestCase {
 
         card.tap()
         scrolledTo(app.buttons["detail.delete"]).tap()
-        app.sheets.buttons["Smazat"].tap()
-        XCTAssertTrue(app.staticTexts["Zatím žádná auta"].waitForExistence(timeout: 5))
+        app.sheets.buttons["Delete"].tap()
+        XCTAssertTrue(app.staticTexts["Your Garage Starts Here"].waitForExistence(timeout: 5))
     }
 
     func testFailedSaveCanBeRetriedWithoutDuplicates() {

@@ -16,7 +16,7 @@ struct RegionConfirmView: View {
                     VStack(spacing: Spacing.medium) {
                         DraftCardPreview(session: session, region: region)
                         PixelSegmentedPicker(
-                            title: "Vzhled karty",
+                            title: "Card Style",
                             selection: cardStyleBinding(region),
                             options: CardStyle.options(hasCutout: region.segmentation.stagedFileName != nil)
                         )
@@ -25,20 +25,20 @@ struct RegionConfirmView: View {
                     .pixelPanel(padding: Spacing.small)
 
                     VStack(alignment: .leading, spacing: Spacing.medium) {
-                        PixelSectionTitle("Návrhy")
+                        PixelSectionTitle("Suggestions")
                         SuggestionsView(session: session, region: region)
                     }
                     .frame(maxWidth: .infinity, alignment: .leading)
                     .pixelPanel()
 
                     VStack(alignment: .leading, spacing: Spacing.medium) {
-                        PixelSectionTitle("Identifikace")
+                        PixelSectionTitle("Identification")
                         IdentityFormFields(input: $input, validationError: validationError)
                         Button {
                             input = IdentityInput()
                             session.markUnknown(regionID)
                         } label: {
-                            Label("Nevím – uložit jako neznámé auto", systemImage: "questionmark.circle")
+                            Label("Save as Unknown Car", systemImage: "questionmark.circle")
                                 .frame(maxWidth: .infinity)
                         }
                         .buttonStyle(PixelButtonStyle(kind: .secondary))
@@ -68,14 +68,14 @@ struct RegionConfirmView: View {
                         dismiss()
                     }
                 } label: {
-                    Text("Potvrdit auto \(region.number)")
+                    Text("Confirm car \(region.number)")
                         .frame(maxWidth: .infinity)
                 }
                 .buttonStyle(PixelButtonStyle())
                 .accessibilityIdentifier("region.confirm")
                 .pixelBottomBar()
             }
-            .navigationTitle(Text("Auto \(region.number)"))
+            .navigationTitle(Text("Car \(region.number)"))
             .navigationBarTitleDisplayMode(.inline)
             .normalizesIdentityInput($input)
             .onAppear {
@@ -93,7 +93,7 @@ struct RegionConfirmView: View {
                 if input != newValue { input = newValue }
             }
         } else {
-            PixelEmptyState(title: "Auto bylo odebráno", message: "Vraťte se zpět na souhrn.")
+            PixelEmptyState(title: "Car Removed", message: "Return to the review screen.")
                 .padding()
                 .frame(maxHeight: .infinity)
                 .background(Theme.night.ignoresSafeArea())
@@ -135,9 +135,9 @@ struct DraftCardPreview: View {
 
     private var accessibilityTitle: LocalizedStringKey {
         switch region.cardStyle {
-        case .pixel: "Náhled pixelové karty"
-        case .cutout: "Náhled karty ve studiu"
-        case .photo: "Náhled karty s fotografickým výřezem"
+        case .pixel: "Pixel card preview"
+        case .cutout: "Studio card preview"
+        case .photo: "Photo card preview"
         }
     }
 
@@ -183,17 +183,17 @@ private struct SuggestionsView: View {
             case .notStarted, .running:
                 HStack(spacing: Spacing.small) {
                     PixelLoadingIndicator()
-                    Text("Připravuji návrhy…").foregroundStyle(Theme.textSecondary)
+                    Text("Preparing suggestions…").foregroundStyle(Theme.textSecondary)
                 }
             case .failed:
-                Text("Návrhy se nepodařilo získat. Údaje můžete doplnit ručně.")
+                Text("Couldn't load suggestions. You can enter the details manually.")
                     .foregroundStyle(Theme.textSecondary)
             case .finished(.unavailable(let reason)):
                 IdentificationUnavailableText(reason: reason)
                     .foregroundStyle(Theme.textSecondary)
             case .finished(.available(let candidates)):
                 if candidates.isEmpty {
-                    Text("Model auto nerozpoznal a nenabídl žádné návrhy. Údaje můžete doplnit ručně.")
+                    Text("The model couldn't identify this car. You can enter the details manually.")
                         .foregroundStyle(Theme.textSecondary)
                 } else {
                     candidateList(candidates)
@@ -205,16 +205,16 @@ private struct SuggestionsView: View {
     @ViewBuilder
     private func candidateList(_ candidates: [VehicleCandidate]) -> some View {
         if session.identifierDescriptor.providerID.hasPrefix("debug.") {
-            Label("Testovací návrhy – pouze ladicí sestavení, nejde o skutečné rozpoznávání.", systemImage: "testtube.2")
+            Label("Sample suggestions for debugging only. These are not real identification results.", systemImage: "testtube.2")
                 .font(.footnote)
                 .foregroundStyle(Theme.gold)
         }
         if session.identifierDescriptor.providerID == SystemModelVehicleIdentifier.providerID {
-            Text("Návrhy vytvořil model Apple Intelligence přímo v zařízení a mohou být nepřesné.")
+            Text("Suggestions are generated by Apple Intelligence on your device and may be inaccurate.")
                 .font(.footnote)
                 .foregroundStyle(Theme.textSecondary)
         }
-        Text("Nejlepší návrh je předvyplněný níže. Údaje vždy potvrzujete sami.")
+        Text("The top suggestion is filled in below. Review the details before confirming.")
             .font(.footnote)
             .foregroundStyle(Theme.textSecondary)
         ForEach(candidates) { candidate in
@@ -231,7 +231,7 @@ private struct SuggestionsView: View {
                     }
                     Spacer()
                     if isChosen {
-                        Label("Vybráno", systemImage: "checkmark").labelStyle(.titleAndIcon).font(.caption)
+                        Label("Selected", systemImage: "checkmark").labelStyle(.titleAndIcon).font(.caption)
                     }
                 }
                 .frame(maxWidth: .infinity)
@@ -243,10 +243,10 @@ private struct SuggestionsView: View {
             session.rejectCandidates(for: region.id)
         } label: {
             HStack {
-                Text("Žádný z návrhů")
+                Text("None of These")
                 Spacer()
                 if region.rejectedAllCandidates {
-                    Label("Vybráno", systemImage: "checkmark").labelStyle(.titleAndIcon).font(.caption)
+                    Label("Selected", systemImage: "checkmark").labelStyle(.titleAndIcon).font(.caption)
                 }
             }
             .frame(maxWidth: .infinity)
@@ -266,10 +266,10 @@ private struct SegmentationStatusText: View {
         case .running:
             HStack(spacing: Spacing.small) {
                 PixelLoadingIndicator()
-                Text("Zkouším oddělit auto od pozadí…").foregroundStyle(Theme.textSecondary)
+                Text("Removing background…").foregroundStyle(Theme.textSecondary)
             }
         case .available:
-            Text("Auto bylo lokálně vyříznuto; jas, kontrast a ostrost byly jen jemně doladěny. Zkontrolujte náhled; vždy můžete ponechat fotografický výřez.")
+            Text("The background was removed on your device, with subtle adjustments to brightness, contrast, and sharpness. Review the result or use the photo crop instead.")
                 .font(.footnote)
                 .foregroundStyle(Theme.textSecondary)
         case .notUsable(let failure):
@@ -282,11 +282,11 @@ private struct SegmentationStatusText: View {
     private func message(for failure: SegmentationFailure) -> LocalizedStringKey {
         switch failure {
         case .unsupported:
-            "Odstranění pozadí není na tomto zařízení dostupné. Karta použije fotografický výřez."
+            "Background removal isn't available on this device. The card will use the photo crop."
         case .ambiguous:
-            "Ve výřezu je více podobně velkých objektů, nevím, které auto vyříznout. Zúžete-li výřez na jedno auto, zkusím to znovu."
+            "The crop contains several similarly sized objects. Narrow the crop to one car to try background removal again."
         case .noInstance, .emptyMask, .failed:
-            "Auto se nepodařilo spolehlivě oddělit od pozadí. Karta použije fotografický výřez."
+            "Couldn't separate the car from its background. The card will use the photo crop."
         }
     }
 }

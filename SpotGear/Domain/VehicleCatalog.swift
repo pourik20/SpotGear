@@ -50,7 +50,7 @@ struct NoPriceClassifier: VehiclePriceClassifier {
 
 enum VehiclePriceFormat {
     static func range(_ range: ClosedRange<Int>) -> String {
-        "\(range.lowerBound.formatted()) – \(range.upperBound.formatted()) Kč"
+        "\(range.lowerBound.formatted()) – \(range.upperBound.formatted()) CZK"
     }
 }
 

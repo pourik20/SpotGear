@@ -73,14 +73,14 @@ private struct RegionOverlay: View {
             }
             .position(x: rect.midX, y: rect.midY)
             .accessibilityElement(children: .ignore)
-            .accessibilityLabel("Auto \(region.number)")
+            .accessibilityLabel("Car \(region.number)")
             .accessibilityValue(Text(verbatim: crop.accessibilityDescription))
             .accessibilityAddTraits(isSelected ? [.isSelected] : [])
-            .accessibilityAction(named: "Vybrat k úpravě", onSelect)
-            .accessibilityAction(named: "Posunout vlevo") { onCommit(crop.moved(dx: -Self.step, dy: 0)) }
-            .accessibilityAction(named: "Posunout vpravo") { onCommit(crop.moved(dx: Self.step, dy: 0)) }
-            .accessibilityAction(named: "Posunout nahoru") { onCommit(crop.moved(dx: 0, dy: -Self.step)) }
-            .accessibilityAction(named: "Posunout dolů") { onCommit(crop.moved(dx: 0, dy: Self.step)) }
+            .accessibilityAction(named: "Select to Edit", onSelect)
+            .accessibilityAction(named: "Move Left") { onCommit(crop.moved(dx: -Self.step, dy: 0)) }
+            .accessibilityAction(named: "Move Right") { onCommit(crop.moved(dx: Self.step, dy: 0)) }
+            .accessibilityAction(named: "Move Up") { onCommit(crop.moved(dx: 0, dy: -Self.step)) }
+            .accessibilityAction(named: "Move Down") { onCommit(crop.moved(dx: 0, dy: Self.step)) }
             .accessibilityAdjustableAction { direction in
                 switch direction {
                 case .increment: onCommit(crop.resized(dWidth: Self.step, dHeight: Self.step))

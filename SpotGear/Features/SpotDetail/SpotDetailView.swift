@@ -12,7 +12,7 @@ struct SpotDetailView: View {
         if let spot = spots.first {
             SpotDetailContent(spot: spot)
         } else {
-            PixelEmptyState(title: "Auto není ve sbírce", message: "Mohlo být mezitím smazáno.")
+            PixelEmptyState(title: "Car Not Found", message: "This car may have been deleted.")
                 .padding()
                 .frame(maxHeight: .infinity)
                 .background(Theme.night.ignoresSafeArea())
@@ -52,12 +52,12 @@ private struct SpotDetailContent: View {
                     Button(role: .destructive) {
                         confirmsDelete = true
                     } label: {
-                        Label("Smazat auto ze sbírky", systemImage: "trash")
+                        Label("Delete Car", systemImage: "trash")
                             .frame(maxWidth: .infinity)
                     }
                     .buttonStyle(PixelButtonStyle(kind: .danger))
                     .accessibilityIdentifier("detail.delete")
-                    Text("Ostatní auta ze stejné fotografie zůstanou zachována.")
+                    Text("Other cars from the same photo will be kept.")
                         .font(.footnote)
                         .foregroundStyle(Theme.textSecondary)
                 }
@@ -74,7 +74,7 @@ private struct SpotDetailContent: View {
                     perform { try services.library.setFavorite(spotID: spot.id, isFavorite: !spot.isFavorite) }
                 } label: {
                     Label(
-                        spot.isFavorite ? "Odebrat z oblíbených" : "Přidat do oblíbených",
+                        spot.isFavorite ? "Remove from Favorites" : "Add to Favorites",
                         systemImage: spot.isFavorite ? "heart.fill" : "heart"
                     )
                 }
@@ -89,14 +89,14 @@ private struct SpotDetailContent: View {
         .sheet(isPresented: $editsIdentity) {
             IdentityEditSheet(spot: spot)
         }
-        .confirmationDialog("Smazat toto auto?", isPresented: $confirmsDelete, titleVisibility: .visible) {
-            Button("Smazat", role: .destructive, action: delete)
-            Button("Zrušit", role: .cancel) {}
+        .confirmationDialog("Delete This Car?", isPresented: $confirmsDelete, titleVisibility: .visible) {
+            Button("Delete", role: .destructive, action: delete)
+            Button("Cancel", role: .cancel) {}
         } message: {
-            Text("Karta, poznámka i identifikace budou odstraněny. Tuto akci nelze vrátit.")
+            Text("The card, note, and identification will be permanently deleted.")
         }
         .alert(
-            "Změnu se nepodařilo uložit",
+            "Unable to Save Changes",
             isPresented: Binding(get: { errorMessage != nil }, set: { if !$0 { errorMessage = nil } })
         ) {
             Button("OK", role: .cancel) {}
@@ -110,7 +110,7 @@ private struct SpotDetailContent: View {
             SpotCardImage(request: spot.primaryPhoto?.imageRequest, style: spot.primaryPhoto?.effectiveCardStyle ?? .photo)
             if let photo = spot.primaryPhoto {
                 PixelSegmentedPicker(
-                    title: "Vzhled karty",
+                    title: "Card Style",
                     selection: cardStyleBinding(photo),
                     options: CardStyle.options(hasCutout: photo.cutoutPath != nil)
                 )
@@ -121,7 +121,7 @@ private struct SpotDetailContent: View {
 
     private var identityPanel: some View {
         VStack(alignment: .leading, spacing: Spacing.medium) {
-            PixelSectionTitle("Identifikace")
+            PixelSectionTitle("Identification")
             VStack(alignment: .leading, spacing: 4) {
                 Text(verbatim: spot.displayTitle)
                     .font(.pixelTitle)
@@ -135,7 +135,7 @@ private struct SpotDetailContent: View {
             Button {
                 editsIdentity = true
             } label: {
-                Label("Upravit identifikaci", systemImage: "pencil")
+                Label("Edit Identification", systemImage: "pencil")
                     .frame(maxWidth: .infinity)
             }
             .buttonStyle(PixelButtonStyle(kind: .secondary))
@@ -149,19 +149,19 @@ private struct SpotDetailContent: View {
         let facts = spot.facts
         return VStack(alignment: .leading, spacing: Spacing.medium) {
             HStack {
-                PixelSectionTitle("Průzkum")
+                PixelSectionTitle("Discovery")
                 Spacer()
                 Text(verbatim: "\(facts.xp) XP")
                     .font(.pixelLabel)
                     .foregroundStyle(Theme.gold)
             }
             PixelProgressBar(value: facts.completion, tint: Theme.sky, segments: 16)
-                .accessibilityLabel("Vyplněné údaje")
+                .accessibilityLabel("Details completed")
                 .accessibilityValue(Text(facts.completion, format: .percent.precision(.fractionLength(0))))
-            ExplorationStep(title: "Značka", isDone: facts.hasMake)
+            ExplorationStep(title: "Make", isDone: facts.hasMake)
             ExplorationStep(title: "Model", isDone: facts.hasModel)
-            ExplorationStep(title: "Generace nebo rok", isDone: facts.hasDetail)
-            ExplorationStep(title: "Poznámka", isDone: facts.hasNote)
+            ExplorationStep(title: "Generation or Year", isDone: facts.hasDetail)
+            ExplorationStep(title: "Note", isDone: facts.hasNote)
         }
         .frame(maxWidth: .infinity, alignment: .leading)
         .pixelPanel()
@@ -169,13 +169,13 @@ private struct SpotDetailContent: View {
 
     private var datesPanel: some View {
         VStack(alignment: .leading, spacing: Spacing.small) {
-            PixelSectionTitle("Datum")
+            PixelSectionTitle("Date")
             if let observedAt = spot.observedAt {
-                LabeledContent("Spatřeno") {
+                LabeledContent("Spotted") {
                     Text(observedAt, format: .dateTime.day().month().year().hour().minute())
                 }
             }
-            LabeledContent("Přidáno do sbírky") {
+            LabeledContent("Added to Collection") {
                 Text(spot.createdAt, format: .dateTime.day().month().year())
             }
         }
@@ -186,8 +186,8 @@ private struct SpotDetailContent: View {
 
     private var notePanel: some View {
         VStack(alignment: .leading, spacing: Spacing.medium) {
-            PixelSectionTitle("Poznámka")
-            TextField("Přidat poznámku", text: $note, axis: .vertical)
+            PixelSectionTitle("Note")
+            TextField("Add a note", text: $note, axis: .vertical)
                 .lineLimit(2...8)
                 .focused($noteFocused)
                 .padding(.vertical, Spacing.small)
@@ -200,7 +200,7 @@ private struct SpotDetailContent: View {
 
     private var originalPhotoPanel: some View {
         VStack(alignment: .leading, spacing: Spacing.medium) {
-            PixelSectionTitle("Původní fotografie")
+            PixelSectionTitle("Original Photo")
             OriginalPhotoView(path: spot.primaryPhoto?.photoAsset?.relativePath)
                 .clipShape(PixelCornerShape())
         }
@@ -212,17 +212,17 @@ private struct SpotDetailContent: View {
     private var identityStatus: some View {
         if let confirmedAt = spot.confirmedAt, spot.identity != nil {
             let source = spot.identitySource == .modelSuggestion
-                ? String(localized: "z návrhu modelu")
-                : String(localized: "ručně")
+                ? String(localized: "model suggestion")
+                : String(localized: "manual entry")
             Label {
-                Text("Potvrzeno uživatelem (\(source)) \(confirmedAt.formatted(date: .abbreviated, time: .omitted))")
+                Text("Confirmed by you (\(source)) on \(confirmedAt.formatted(date: .abbreviated, time: .omitted))")
             } icon: {
                 Image(systemName: "checkmark.seal")
             }
             .font(.subheadline)
             .foregroundStyle(Theme.textSecondary)
         } else {
-            Label("Neznámé auto. Údaje můžete kdykoli doplnit.", systemImage: "questionmark.circle")
+            Label("Unknown car. You can add details at any time.", systemImage: "questionmark.circle")
                 .font(.subheadline)
                 .foregroundStyle(Theme.textSecondary)
         }
@@ -247,7 +247,7 @@ private struct SpotDetailContent: View {
                 try await services.library.deleteSpot(id: id)
                 dismiss()
             } catch {
-                errorMessage = String(localized: "Auto se nepodařilo smazat. Sbírka zůstala beze změny.")
+                errorMessage = String(localized: "Couldn't delete the car. Your collection is unchanged.")
             }
         }
     }
@@ -256,7 +256,7 @@ private struct SpotDetailContent: View {
         do {
             try action()
         } catch {
-            errorMessage = String(localized: "Sbírka zůstala beze změny. Zkuste to prosím znovu.")
+            errorMessage = String(localized: "Your collection is unchanged. Please try again.")
         }
     }
 }
@@ -273,7 +273,7 @@ private struct ExplorationStep: View {
                 .foregroundStyle(isDone ? Theme.lime : Theme.line)
         }
         .font(.subheadline)
-        .accessibilityValue(isDone ? Text("Vyplněno") : Text("Chybí"))
+        .accessibilityValue(isDone ? Text("Complete") : Text("Missing"))
     }
 }
 
@@ -290,9 +290,9 @@ private struct OriginalPhotoView: View {
                 Image(decorative: image, scale: 1)
                     .resizable()
                     .scaledToFit()
-                    .accessibilityLabel("Původní fotografie")
+                    .accessibilityLabel("Original Photo")
             } else if isMissing {
-                Label("Původní fotografie není dostupná.", systemImage: "exclamationmark.triangle")
+                Label("The original photo is unavailable.", systemImage: "exclamationmark.triangle")
                     .foregroundStyle(Theme.textSecondary)
                     .padding()
             } else {
@@ -324,18 +324,18 @@ private struct IdentityEditSheet: View {
             ScrollView {
                 VStack(alignment: .leading, spacing: Spacing.medium) {
                     IdentityFormFields(input: $input, validationError: validationError)
-                    Text("Úprava nepotřebuje internet. Uložením údaje potvrzujete.")
+                    Text("Editing works offline. Saving confirms these details.")
                         .font(.footnote)
                         .foregroundStyle(Theme.textSecondary)
                     Button {
                         input = IdentityInput()
                     } label: {
-                        Label("Nevím – neznámé auto", systemImage: "questionmark.circle")
+                        Label("Mark as Unknown", systemImage: "questionmark.circle")
                             .frame(maxWidth: .infinity)
                     }
                     .buttonStyle(PixelButtonStyle(kind: .secondary))
                     if saveFailed {
-                        Label("Změnu se nepodařilo uložit. Zkuste to znovu.", systemImage: "exclamationmark.triangle")
+                        Label("Couldn't save your changes. Please try again.", systemImage: "exclamationmark.triangle")
                             .foregroundStyle(Theme.danger)
                     }
                 }
@@ -345,14 +345,14 @@ private struct IdentityEditSheet: View {
             .background(Theme.night.ignoresSafeArea())
             .normalizesIdentityInput($input)
             .onChange(of: input) { validationError = nil }
-            .navigationTitle("Identifikace")
+            .navigationTitle("Identification")
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .cancellationAction) {
-                    Button("Zrušit") { dismiss() }
+                    Button("Cancel") { dismiss() }
                 }
                 ToolbarItem(placement: .confirmationAction) {
-                    Button("Uložit", action: save)
+                    Button("Save", action: save)
                         .accessibilityIdentifier("identity.save")
                 }
             }
