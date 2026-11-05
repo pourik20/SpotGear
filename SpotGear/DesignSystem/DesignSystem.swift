@@ -10,7 +10,7 @@ enum Spacing {
     static let minimumTapTarget: CGFloat = 44
 }
 
-/// A 4:3 card frame. Photos fill and crop; cutouts keep their proportions on the studio stage.
+/// A 4:3 card frame. Photos fit in full; cutouts keep their proportions on the studio stage.
 struct CardFrame<Content: View>: View {
     @ViewBuilder var content: Content
 
@@ -43,9 +43,12 @@ struct CardImageContent: View {
                     PixelLoadingIndicator()
                 }
             case .photo(let image):
-                Image(decorative: image, scale: 1)
-                    .resizable()
-                    .scaledToFill()
+                ZStack {
+                    Theme.panelRaised
+                    Image(decorative: image, scale: 1)
+                        .resizable()
+                        .scaledToFit()
+                }
             case .cutout(let image):
                 StudioStage(cutout: image)
             case .pixel(let image):
