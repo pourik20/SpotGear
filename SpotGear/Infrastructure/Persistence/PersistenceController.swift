@@ -15,13 +15,13 @@ enum PersistenceController {
             at: storeURL.deletingLastPathComponent(),
             withIntermediateDirectories: true
         )
-        let schema = Schema(versionedSchema: SchemaV1.self)
+        let schema = Schema(versionedSchema: SchemaV2.self)
         let configuration = ModelConfiguration(schema: schema, url: storeURL, allowsSave: true, cloudKitDatabase: .none)
         return try ModelContainer(for: schema, migrationPlan: SpotGearMigrationPlan.self, configurations: [configuration])
     }
 
     static func makeInMemoryContainer() throws -> ModelContainer {
-        let schema = Schema(versionedSchema: SchemaV1.self)
+        let schema = Schema(versionedSchema: SchemaV2.self)
         let configuration = ModelConfiguration(schema: schema, isStoredInMemoryOnly: true, cloudKitDatabase: .none)
         return try ModelContainer(for: schema, migrationPlan: SpotGearMigrationPlan.self, configurations: [configuration])
     }

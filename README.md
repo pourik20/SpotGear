@@ -10,6 +10,7 @@ Built with SwiftUI, SwiftData, Vision, and on-device Apple Intelligence. No acco
 - **On-device identification:** review suggested makes and models, or enter the details manually.
 - **Three card styles:** photo crops, studio cutouts with background removal, and locally rendered pixel art.
 - **Your personal garage:** search, favorites, notes, editable vehicle details, XP, ranks, and quests.
+- **RPG rarity and XP:** Common through Mythic, determined by the upper catalog price (25–800 XP per spot). Repeated spots receive full XP; saved rewards survive later price updates. Cars without a catalog price receive 25 XP until priced.
 - **Offline vehicle catalog:** production years, specifications, and rough used-price ranges in CZK.
 
 Photos and collection data are stored and processed on your device. They may be included in system backups. Deleting the app also deletes its local collection.

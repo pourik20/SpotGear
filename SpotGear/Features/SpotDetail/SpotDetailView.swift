@@ -40,7 +40,8 @@ private struct SpotDetailContent: View {
                     VehicleInsightPanel(
                         identity: identity,
                         catalog: services.catalog,
-                        priceClassifier: services.priceClassifier
+                        priceClassifier: services.priceClassifier,
+                        showsRewardPreview: false
                     )
                 }
                 explorationPanel
@@ -116,7 +117,7 @@ private struct SpotDetailContent: View {
                 )
             }
         }
-        .pixelPanel(padding: Spacing.small)
+        .pixelPanel(border: spot.rewardRarity.color, padding: Spacing.small)
     }
 
     private var identityPanel: some View {
@@ -151,9 +152,19 @@ private struct SpotDetailContent: View {
             HStack {
                 PixelSectionTitle("Discovery")
                 Spacer()
-                Text(verbatim: "\(facts.xp) XP")
-                    .font(.pixelLabel)
-                    .foregroundStyle(Theme.gold)
+            }
+            RarityBadge(rarity: spot.rewardRarity, xp: facts.xp)
+            if let price = spot.rewardPriceUpperCZK {
+                LabeledContent("Price Used for Reward") {
+                    Text(verbatim: "\(price.formatted()) CZK")
+                }
+                Text("Rarity uses the upper catalog price at the time of identification. Later price updates do not change this reward.")
+                    .font(.footnote)
+                    .foregroundStyle(Theme.textSecondary)
+            } else {
+                Text("No catalog price yet. You receive 25 XP until a price becomes available.")
+                    .font(.footnote)
+                    .foregroundStyle(Theme.textSecondary)
             }
             PixelProgressBar(value: facts.completion, tint: Theme.sky, segments: 16)
                 .accessibilityLabel("Details completed")

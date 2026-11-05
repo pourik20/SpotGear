@@ -54,6 +54,21 @@ struct RepositoryTests {
         #expect(spots[2].note == "U nádraží")
     }
 
+    @Test func everyNewSpotReceivesFullPriceReward() throws {
+        let container = try PersistenceController.makeInMemoryContainer()
+        let catalog = VehicleCatalog(entries: [CatalogEntry(
+            make: "Škoda", model: "Octavia", from: 2000, to: nil, body: "sedan",
+            powertrain: "petrol", powerKW: [100, 200], priceCZK: [100_000, 750_000]
+        )])
+        let repository = try SwiftDataSpotRepository(container: container, catalog: catalog)
+        _ = try repository.save(batch(spots: 1))
+        _ = try repository.save(batch(spots: 1))
+        let spots = try container.mainContext.fetch(FetchDescriptor<Spot>())
+        #expect(spots.count == 2)
+        #expect(spots.allSatisfy { $0.rewardRarity == .rare && $0.facts.xp == 100 })
+        #expect(GarageProgress(spots: spots.map(\.facts)).xp == 200)
+    }
+
     @Test func savingTheSameBatchTwiceCreatesNoDuplicates() throws {
         let harness = try Harness()
         let saved = batch(spots: 2)

@@ -104,6 +104,10 @@ private struct RegionSummaryRow: View {
                     Text(verbatim: VehiclePriceFormat.range(price))
                         .font(.caption)
                         .foregroundStyle(Theme.gold)
+                    let rarity = SpotRarity(upperPriceCZK: price.upperBound)
+                    RarityBadge(rarity: rarity, xp: rarity.xp)
+                } else if region.status == .confirmed {
+                    RarityBadge(rarity: .unknown, xp: SpotRarity.unknown.xp)
                 }
             }
         }

@@ -84,19 +84,19 @@ struct GarageProgressTests {
         #expect(progress.completedQuestCount == 0)
     }
 
-    @Test func xpRewardsFilledDetails() {
-        #expect(SpotFacts().xp == 20)
-        #expect(SpotFacts(make: "Škoda", hasModel: true, hasDetail: true, hasNote: true).xp == 80)
+    @Test func xpDoesNotRewardFilledDetails() {
+        #expect(SpotFacts().xp == 25)
+        #expect(SpotFacts(make: "Škoda", hasModel: true, hasDetail: true, hasNote: true).xp == 25)
     }
 
     @Test func levelsConsumeXPAndKeepRemainder() {
-        // 100 XP to level 2, another 150 to level 3; these spots give 260 XP in total.
-        let spots = Array(repeating: SpotFacts(make: "Tatra", hasModel: true, hasDetail: true, hasNote: true), count: 3)
+        // 100 XP to level 2, another 150 to level 3; repeated Rare spots give full XP.
+        let spots = Array(repeating: SpotFacts(make: "Tatra", hasModel: true, hasDetail: true, hasNote: true, xp: SpotRarity.rare.xp), count: 3)
             + Array(repeating: SpotFacts(), count: 1)
         let progress = GarageProgress(spots: spots)
-        #expect(progress.xp == 260)
+        #expect(progress.xp == 325)
         #expect(progress.level == 3)
-        #expect(progress.xpIntoLevel == 10)
+        #expect(progress.xpIntoLevel == 75)
         #expect(progress.xpForLevel == 200)
     }
 
@@ -114,7 +114,7 @@ struct GarageProgressTests {
     }
 
     @Test func deletingSpotsLowersProgress() {
-        let full = GarageProgress(spots: Array(repeating: SpotFacts(make: "Tatra"), count: 3))
+        let full = GarageProgress(spots: Array(repeating: SpotFacts(make: "Tatra"), count: 4))
         let reduced = GarageProgress(spots: [SpotFacts(make: "Tatra")])
         #expect(full.level > reduced.level)
     }

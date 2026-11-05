@@ -1,6 +1,6 @@
 import Foundation
 
-extension SchemaV1.Spot {
+extension SchemaV2.Spot {
     var identityStatus: IdentityStatus {
         IdentityStatus(rawValue: identityStatusRaw) ?? .unknown
     }
@@ -25,6 +25,10 @@ extension SchemaV1.Spot {
     /// Observation date when known, otherwise the date the spot was added.
     var displayDate: Date { observedAt ?? createdAt }
 
+    var rewardRarity: SpotRarity {
+        rewardRarityRaw.flatMap(SpotRarity.init(rawValue:)) ?? .unknown
+    }
+
     var facts: SpotFacts {
         let identity = identity
         return SpotFacts(
@@ -32,7 +36,8 @@ extension SchemaV1.Spot {
             hasModel: identity?.model != nil,
             hasDetail: identity?.detail != nil,
             hasNote: !note.isEmpty,
-            isFavorite: isFavorite
+            isFavorite: isFavorite,
+            xp: rewardXP ?? SpotRarity.unknown.xp
         )
     }
 
@@ -41,7 +46,7 @@ extension SchemaV1.Spot {
     }
 }
 
-extension SchemaV1.SpotPhoto {
+extension SchemaV2.SpotPhoto {
     var crop: CropRect {
         CropRect(x: cropX, y: cropY, width: cropWidth, height: cropHeight)
     }

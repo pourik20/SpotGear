@@ -125,12 +125,14 @@ enum SchemaV1: VersionedSchema {
     }
 }
 
-typealias PhotoAsset = SchemaV1.PhotoAsset
-typealias Spot = SchemaV1.Spot
-typealias SpotPhoto = SchemaV1.SpotPhoto
-typealias IdentificationAttempt = SchemaV1.IdentificationAttempt
+typealias PhotoAsset = SchemaV2.PhotoAsset
+typealias Spot = SchemaV2.Spot
+typealias SpotPhoto = SchemaV2.SpotPhoto
+typealias IdentificationAttempt = SchemaV2.IdentificationAttempt
 
 enum SpotGearMigrationPlan: SchemaMigrationPlan {
-    static var schemas: [any VersionedSchema.Type] { [SchemaV1.self] }
-    static var stages: [MigrationStage] { [] }
+    static var schemas: [any VersionedSchema.Type] { [SchemaV1.self, SchemaV2.self] }
+    static var stages: [MigrationStage] {
+        [.lightweight(fromVersion: SchemaV1.self, toVersion: SchemaV2.self)]
+    }
 }

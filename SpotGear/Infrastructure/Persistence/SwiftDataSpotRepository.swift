@@ -12,12 +12,21 @@ enum RepositoryError: Error, Equatable {
 @MainActor
 final class SwiftDataSpotRepository: SpotRepository {
     let context: ModelContext
+    private let catalog: VehicleCatalog
     /// Fault injection for tests and debug launch arguments; runs right before each save.
     var beforeSave: (() throws -> Void)?
 
-    init(container: ModelContainer) {
+    init(container: ModelContainer, catalog: VehicleCatalog = .bundled()) throws {
+        self.catalog = catalog
         context = container.mainContext
         context.autosaveEnabled = false
+        // Snapshot migrated spots once. Only unresolved rewards may pick up new catalog entries.
+        for spot in try context.fetch(FetchDescriptor<Spot>()) {
+            if spot.rewardXP == nil || (spot.rewardPriceUpperCZK == nil && catalog.insight(for: spot.identity) != nil) {
+                snapshotReward(for: spot)
+            }
+        }
+        if context.hasChanges { try commit() }
     }
 
     func save(_ batch: SpotBatch) throws -> SaveOutcome {
@@ -43,6 +52,7 @@ final class SwiftDataSpotRepository: SpotRepository {
         for record in batch.spots {
             let spot = Spot(id: record.spotID, createdAt: record.createdAt, observedAt: record.observedAt)
             apply(identity: record.identity, source: record.identitySource, confirmedAt: record.confirmedAt, to: spot)
+            snapshotReward(for: spot)
             context.insert(spot)
 
             let photo = SpotPhoto(
@@ -82,7 +92,9 @@ final class SwiftDataSpotRepository: SpotRepository {
 
     func updateIdentity(spotID: UUID, identity: VehicleIdentity?, source: IdentitySource) throws {
         let spot = try fetchSpot(spotID)
+        let identityChanged = spot.identity != identity
         apply(identity: identity, source: identity == nil ? nil : source, confirmedAt: Date(), to: spot)
+        if identityChanged { snapshotReward(for: spot) }
         spot.updatedAt = Date()
         try commit()
     }
@@ -178,6 +190,14 @@ final class SwiftDataSpotRepository: SpotRepository {
             spot.identitySourceRaw = nil
             spot.confirmedAt = nil
         }
+    }
+
+    private func snapshotReward(for spot: Spot) {
+        let upperPrice = catalog.insight(for: spot.identity)?.priceCZK.upperBound
+        let rarity = SpotRarity(upperPriceCZK: upperPrice)
+        spot.rewardPriceUpperCZK = upperPrice
+        spot.rewardRarityRaw = rarity.rawValue
+        spot.rewardXP = rarity.xp
     }
 
     private func commit() throws {

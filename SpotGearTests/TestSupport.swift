@@ -95,7 +95,7 @@ final class Harness {
         self.root = root
         media = FileMediaStore(rootURL: root.appendingPathComponent("Media", isDirectory: true), availableCapacity: availableCapacity)
         container = try PersistenceController.makeContainer(storeURL: root.appendingPathComponent("SpotGear.store"))
-        repository = SwiftDataSpotRepository(container: container)
+        repository = try SwiftDataSpotRepository(container: container)
     }
 
     func makeSession(

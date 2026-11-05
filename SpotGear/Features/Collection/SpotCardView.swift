@@ -27,22 +27,28 @@ struct SpotCardView: View {
                 Text(spot.displayDate, format: .dateTime.day().month().year())
                     .font(.caption)
                     .foregroundStyle(Theme.textSecondary)
-                HStack(spacing: Spacing.small) {
-                    PixelProgressBar(value: spot.facts.completion, tint: Theme.sky, segments: 4)
-                    Text(verbatim: "\(spot.facts.xp) XP")
-                        .font(.pixelLabel)
-                        .foregroundStyle(Theme.gold)
-                        .fixedSize()
-                }
+                RarityBadge(rarity: spot.rewardRarity, xp: spot.facts.xp)
             }
             .padding(Spacing.medium)
         }
         .frame(maxWidth: .infinity, alignment: .leading)
-        .pixelPanel(padding: 0)
+        .pixelPanel(border: spot.rewardRarity.color, padding: 0)
         .contentShape(Rectangle())
         .accessibilityElement(children: .ignore)
         .accessibilityLabel(accessibilitySummary)
         .accessibilityIdentifier("spot.card")
+    }
+
+    private var rarityAccessibilityTitle: String {
+        switch spot.rewardRarity {
+        case .unknown: String(localized: "Undetermined Rarity")
+        case .common: String(localized: "Common")
+        case .uncommon: String(localized: "Uncommon")
+        case .rare: String(localized: "Rare")
+        case .epic: String(localized: "Epic")
+        case .legendary: String(localized: "Legendary")
+        case .mythic: String(localized: "Mythic")
+        }
     }
 
     private var accessibilitySummary: String {
@@ -54,6 +60,7 @@ struct SpotCardView: View {
             : String(localized: "spotted \(date)"))
         if spot.isFavorite { parts.append(String(localized: "favorite")) }
         parts.append(String(localized: "\(spot.facts.xp) XP"))
+        parts.append(rarityAccessibilityTitle)
         return parts.joined(separator: ", ")
     }
 }

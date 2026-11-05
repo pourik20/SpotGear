@@ -29,7 +29,7 @@ final class AppServices {
         priceClassifier: any VehiclePriceClassifier,
         offersTestPhotos: Bool,
         beforeSave: (() throws -> Void)? = nil
-    ) {
+    ) throws {
         self.container = container
         self.media = media
         self.identifier = identifier
@@ -38,7 +38,7 @@ final class AppServices {
         self.catalog = catalog
         self.priceClassifier = priceClassifier
         self.offersTestPhotos = offersTestPhotos
-        repository = SwiftDataSpotRepository(container: container)
+        repository = try SwiftDataSpotRepository(container: container, catalog: catalog)
         repository.beforeSave = beforeSave
         cardImages = CardImageLoader(media: media)
         library = SpotLibrary(repository: repository, media: media, cardImages: cardImages)
@@ -58,7 +58,7 @@ final class AppServices {
     #if DEBUG
     /// Canvas uses an in-memory library and its own temporary media directory.
     static func preview() throws -> AppServices {
-        AppServices(
+        try AppServices(
             container: try PersistenceController.makeInMemoryContainer(),
             media: FileMediaStore(rootURL: FileManager.default.temporaryDirectory
                 .appendingPathComponent("SpotGearPreviews", isDirectory: true)
@@ -87,7 +87,7 @@ final class AppServices {
         }
 
         let container = try PersistenceController.makeContainer(storeURL: storeURL)
-        return AppServices(
+        return try AppServices(
             container: container,
             media: FileMediaStore(rootURL: mediaURL),
             identifier: options.makeIdentifier(),

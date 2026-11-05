@@ -69,6 +69,12 @@ final class SpotGearUITests: XCTestCase {
         let cards = app.descendants(matching: .any).matching(identifier: "spot.card")
         XCTAssertTrue(cards.firstMatch.waitForExistence(timeout: 10))
         XCTAssertEqual(cards.count, 2)
+        let knownCard = cards.matching(NSPredicate(format: "label CONTAINS %@", "Škoda Octavia")).firstMatch
+        XCTAssertTrue(knownCard.label.contains("Rare"))
+        XCTAssertTrue(knownCard.label.contains("100 XP"))
+        let unknownCard = cards.matching(NSPredicate(format: "label CONTAINS %@", "Unknown Car")).firstMatch
+        XCTAssertTrue(unknownCard.label.contains("Undetermined Rarity"))
+        XCTAssertTrue(unknownCard.label.contains("25 XP"))
 
         // Search ignores case and diacritics.
         let search = app.searchFields.firstMatch

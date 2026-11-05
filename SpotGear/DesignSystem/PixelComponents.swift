@@ -49,12 +49,16 @@ struct PixelPanelModifier: ViewModifier {
     func body(content: Content) -> some View {
         content
             .padding(padding)
+            .clipShape(PixelCornerShape())
             .background {
                 ZStack {
                     PixelCornerShape().fill(Theme.lineDark).offset(y: Spacing.lip)
                     PixelCornerShape().fill(fill)
-                    PixelCornerShape().strokeBorder(border, lineWidth: Spacing.border)
                 }
+            }
+            .overlay {
+                PixelCornerShape().strokeBorder(border, lineWidth: Spacing.border)
+                    .allowsHitTesting(false)
             }
             .padding(.bottom, Spacing.lip)
     }

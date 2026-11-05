@@ -5,6 +5,7 @@ struct VehicleInsightPanel: View {
     let identity: VehicleIdentity
     let catalog: VehicleCatalog
     let priceClassifier: any VehiclePriceClassifier
+    var showsRewardPreview = true
 
     @State private var priceClass: VehiclePriceClass?
     @State private var isClassifying = false
@@ -40,6 +41,14 @@ struct VehicleInsightPanel: View {
         }
         .accessibilityElement(children: .combine)
 
+        if showsRewardPreview {
+            let rarity = SpotRarity(upperPriceCZK: insight.priceCZK.upperBound)
+            RarityBadge(rarity: rarity, xp: rarity.xp)
+            Text("Rarity and XP are based on the upper end of this price range.")
+                .font(.footnote)
+                .foregroundStyle(Theme.textSecondary)
+        }
+
         if let generation = insight.generation {
             LabeledContent("Generation") { Text(verbatim: generation) }
         }
@@ -66,6 +75,9 @@ struct VehicleInsightPanel: View {
 
     @ViewBuilder
     private var missingContent: some View {
+        if showsRewardPreview {
+            RarityBadge(rarity: .unknown, xp: SpotRarity.unknown.xp)
+        }
         Text("This car isn't in the catalog yet. Price estimates and specifications are unavailable.")
             .foregroundStyle(Theme.textSecondary)
         if isClassifying {
