@@ -1,0 +1,316 @@
+{
+  "sourceLanguage" : "cs",
+  "strings" : {
+    "%lld / %lld XP" : {
+      "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "%1$lld / %2$lld XP"
+          }
+        }
+      }
+    },
+    "%lld XP" : {},
+    "%lld z %lld" : {
+      "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "%1$lld z %2$lld"
+          }
+        }
+      }
+    },
+    "%lld z %lld XP" : {
+      "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "%1$lld z %2$lld XP"
+          }
+        }
+      }
+    },
+    "Aut" : {},
+    "Auta našel lokální rozpoznávač. Chybí nějaké, třeba zakryté v pozadí? Přidáte ho přes „Upravit výběr“." : {},
+    "Auta se nepodařilo uložit. Sbírka zůstala beze změny a můžete to zkusit znovu." : {},
+    "Auto %lld" : {},
+    "Auto bylo lokálně vyříznuto; jas, kontrast a ostrost byly jen jemně doladěny. Zkontrolujte náhled; vždy můžete ponechat fotografický výřez." : {},
+    "Auto bylo odebráno" : {},
+    "Auto není ve sbírce" : {},
+    "Auto označíte jako oblíbené v jeho detailu." : {},
+    "Auto se nepodařilo smazat. Sbírka zůstala beze změny." : {},
+    "Auto se nepodařilo spolehlivě oddělit od pozadí. Karta použije fotografický výřez." : {},
+    "Automatická identifikace není v této verzi dostupná. Údaje můžete doplnit ručně." : {},
+    "Automatická identifikace vyžaduje iOS 27 a zařízení s Apple Intelligence. Údaje můžete doplnit ručně." : {},
+    "Automatické hledání aut není na tomto zařízení dostupné. Klepněte na „Přidat auto“ a rámeček posuňte na auto, které chcete uložit." : {},
+    "Autosalon" : {},
+    "Bez značky se auto uloží jako neznámé. Údaje můžete doplnit později." : {},
+    "Běžná" : {},
+    "Cenová kategorie" : {},
+    "Chybí" : {},
+    "Data a zálohy" : {},
+    "Databázi sbírky se nepodařilo otevřít. Data nebyla smazána ani přepsána. Zkuste aplikaci ukončit a spustit znovu, případně ji aktualizovat." : {},
+    "Datum" : {},
+    "Detektiv" : {},
+    "Fotoaparát není dostupný" : {},
+    "Fotografie není dostupná" : {},
+    "Fotografii se nepodařilo načíst. Pokud je uložená jen na iCloudu a zařízení je offline, připojte se k internetu nebo vyberte jinou fotografii." : {},
+    "Generace" : {},
+    "Generace (nepovinné)" : {},
+    "Generace nebo rok" : {},
+    "Hledat značku nebo model" : {},
+    "Hledám auta na fotografii…" : {},
+    "Hrubý odhad modelu Apple Intelligence v zařízení, může být nepřesný." : {},
+    "Hrubý odhad z katalogu v aplikaci (stav %@). Skutečná cena záleží na stavu, nájezdu a výbavě. Údaje se týkají typu auta, ne tohoto kusu." : {},
+    "Identifikace" : {},
+    "Identifikace aut" : {},
+    "Jen oblíbené" : {},
+    "Karoserie" : {},
+    "Karta, poznámka i identifikace budou odstraněny. Tuto akci nelze vrátit." : {},
+    "Klepněte na „Přidat auto“ a rámeček posuňte na auto, které chcete uložit. Na jedné fotografii můžete označit až 10 aut." : {},
+    "LVL" : {},
+    "Ladicí sestavení: testovací návrhy, nejde o skutečné rozpoznávání." : {},
+    "Legenda" : {},
+    "Levná" : {},
+    "Lokální identifikační model je k dispozici. Návrhy vždy potvrzujete sami." : {},
+    "Lovec aut" : {},
+    "Luxusní" : {},
+    "Mistr garáže" : {},
+    "Model" : {},
+    "Model Apple Intelligence se v zařízení ještě připravuje. Zkuste to později, nebo údaje doplňte ručně." : {},
+    "Model auto nerozpoznal a nenabídl žádné návrhy. Údaje můžete doplnit ručně." : {},
+    "Model, generaci ani rok nelze uložit bez značky." : {},
+    "Mohlo být mezitím smazáno." : {},
+    "Na fotografii jsem žádné auto nenašel. Klepněte na „Přidat auto“ a rámeček posuňte na auto, které chcete uložit." : {},
+    "Na tomto zařízení nelze použít fotoaparát. Fotografii můžete vybrat z knihovny." : {},
+    "Nastavení" : {},
+    "Načítám" : {},
+    "Načítám fotografii…" : {},
+    "Nedostatek místa" : {},
+    "Nejlepší návrh je předvyplněný níže. Údaje vždy potvrzujete sami." : {},
+    "Nepotvrzeno" : {},
+    "Nevím – neznámé auto" : {},
+    "Nevím – uložit jako neznámé auto" : {},
+    "Neznámé auto" : {},
+    "Neznámé auto. Údaje můžete kdykoli doplnit." : {},
+    "Nic jsme nenašli" : {},
+    "Nižší" : {},
+    "Nová fotografie" : {},
+    "Nová úroveň %lld!" : {},
+    "Nováček" : {},
+    "Náhled karty s fotografickým výřezem" : {},
+    "Náhled karty ve studiu" : {},
+    "Náhled pixelové karty" : {},
+    "Návrh: %@" : {},
+    "Návrhy" : {},
+    "Návrhy se nepodařilo získat. Údaje můžete doplnit ručně." : {},
+    "Návrhy vytvořil model Apple Intelligence přímo v zařízení a mohou být nepřesné." : {},
+    "Návrhy značky a modelu vytváří Apple Intelligence přímo v zařízení, bez odesílání fotografií. Mohou být nepřesné, proto je vždy potvrzujete sami." : {},
+    "O autě" : {},
+    "OK" : {},
+    "Odebrat" : {},
+    "Odebrat auto %lld" : {},
+    "Odebrat z oblíbených" : {},
+    "Odhaduji cenovou kategorii…" : {},
+    "Odstraní se všechny karty, poznámky i uložené fotografie. Tuto akci nelze vrátit." : {},
+    "Odstranění pozadí není na tomto zařízení dostupné. Karta použije fotografický výřez." : {},
+    "Odstranění pozadí probíhá lokálně pomocí systémového rozhraní Vision, pokud jej zařízení podporuje. Jinak karta použije fotografický výřez." : {},
+    "Offline režim" : {},
+    "Orientační cena ojetého auta" : {},
+    "Ostatní auta ze stejné fotografie zůstanou zachována." : {},
+    "Otevřít Nastavení" : {},
+    "Označ 3 auta jako oblíbená." : {},
+    "Označená auta" : {},
+    "Označená auta se neuloží." : {},
+    "Označte auta" : {},
+    "Pixel" : {},
+    "Pixel art" : {},
+    "Pixelové karty vznikají přímo ve vašem zařízení zmenšením vlastní fotografie a omezením barev. Nic se negeneruje ani neodesílá a původní fotografie zůstává beze změny." : {},
+    "Pohon" : {},
+    "Pokračovat" : {},
+    "Pokračovat v úpravách" : {},
+    "Poloha auta %lld" : {},
+    "Postup na další úroveň" : {},
+    "Posunout dolů" : {},
+    "Posunout nahoru" : {},
+    "Posunout vlevo" : {},
+    "Posunout vpravo" : {},
+    "Potvrdit" : {},
+    "Potvrdit auto %lld" : {},
+    "Potvrzeno" : {},
+    "Potvrzeno uživatelem (%@) %@" : {
+      "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Potvrzeno uživatelem (%1$@) %2$@"
+          }
+        }
+      }
+    },
+    "Potvrďte nebo odeberte všechna auta. Zbývá potvrdit: %lld." : {},
+    "Poznámka" : {},
+    "Pozorovatel" : {},
+    "Pro návrhy zapněte Apple Intelligence v Nastavení systému. Do té doby můžete údaje doplnit ručně." : {},
+    "První úlovek" : {},
+    "Prémiová" : {},
+    "Průzkum" : {},
+    "Přidat auto" : {},
+    "Přidat do oblíbených" : {},
+    "Přidat fotografii" : {},
+    "Přidat poznámku" : {},
+    "Přidáno do sbírky" : {},
+    "Připravuji návrhy…" : {},
+    "Přístup k fotoaparátu můžete povolit v Nastavení. Mezitím můžete vybrat fotografii z knihovny." : {},
+    "Přístup k fotoaparátu není povolen" : {},
+    "Původní fotografie" : {},
+    "Původní fotografie není dostupná." : {},
+    "Rok (nepovinné)" : {},
+    "Rok zadejte jako čtyři číslice, například 2015." : {},
+    "Sbírka" : {},
+    "Sbírka je uložena v datech aplikace v tomto zařízení. Může být součástí systémové zálohy do iCloudu nebo počítače. Odinstalováním aplikace se sbírka smaže." : {},
+    "Sbírka zůstala beze změny. Zkuste to prosím znovu." : {},
+    "Sbírku nelze otevřít" : {},
+    "Sbírku se nepodařilo smazat. Data zůstala beze změny." : {},
+    "Sběratel" : {},
+    "Sběratelská" : {},
+    "Smazat" : {},
+    "Smazat auto ze sbírky" : {},
+    "Smazat celou sbírku" : {},
+    "Smazat celou sbírku?" : {},
+    "Smazat toto auto?" : {},
+    "Smazat všechna auta a fotografie" : {},
+    "Soubor nelze otevřít" : {},
+    "Souhrn" : {},
+    "Spatřeno" : {},
+    "Splněno" : {},
+    "SpotGear funguje bez internetu, účtu i serveru. Fotografie, sbírka i jejich zpracování zůstávají v tomto zařízení." : {},
+    "Srdcovky" : {},
+    "Studio" : {},
+    "Superauta" : {},
+    "Testovací fotografie" : {},
+    "Testovací návrhy – pouze ladicí sestavení, nejde o skutečné rozpoznávání." : {},
+    "Toto auto v katalogu aplikace zatím není, takže cenu ani technické údaje neuvádím." : {},
+    "Toto zařízení nepodporuje Apple Intelligence, automatická identifikace proto není dostupná. Údaje můžete doplnit ručně." : {},
+    "Tři značky" : {},
+    "U 5 aut vyplň značku, model a generaci nebo rok." : {},
+    "Ukládám…" : {},
+    "Ulož 10 aut." : {},
+    "Ulož auta 10 různých značek." : {},
+    "Ulož auta 3 různých značek." : {},
+    "Ulož své první auto." : {},
+    "Uložení se nezdařilo" : {},
+    "Uložit" : {},
+    "Uložit %lld aut" : {
+      "localizations" : {
+        "cs" : {
+          "variations" : {
+            "plural" : {
+              "few" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "Uložit %lld auta"
+                }
+              },
+              "many" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "Uložit %lld aut"
+                }
+              },
+              "one" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "Uložit %lld auto"
+                }
+              },
+              "other" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "Uložit %lld aut"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "Upravit" : {},
+    "Upravit identifikaci" : {},
+    "Upravit polohu auta %lld" : {},
+    "Upravit výběr" : {},
+    "Užší" : {},
+    "V zařízení není dost volného místa. Uvolněte místo a zkuste to znovu. Uložená sbírka zůstala beze změny." : {},
+    "Ve výřezu je více podobně velkých objektů, nevím, které auto vyříznout. Zúžete-li výřez na jedno auto, zkusím to znovu." : {},
+    "Vraťte se zpět na souhrn." : {},
+    "Vybraný soubor se nepodařilo přečíst jako fotografii. Může být poškozený. Vyberte prosím jinou fotografii." : {},
+    "Vybrat jinou fotografii" : {},
+    "Vybrat k úpravě" : {},
+    "Vybrat z knihovny" : {},
+    "Vybráno" : {},
+    "Vybráno k úpravě" : {},
+    "Vyfotit" : {},
+    "Vyfoťte auto nebo vyberte fotografii z knihovny. Na jedné fotografii můžete označit i více aut." : {},
+    "Vyplněno" : {},
+    "Vyplněné údaje" : {},
+    "Vyráběno" : {},
+    "Vyšší" : {},
+    "Vzhled karty" : {},
+    "Výkon" : {},
+    "Výzev" : {},
+    "Výzvy" : {},
+    "Výřez" : {},
+    "Zahodit" : {},
+    "Zahodit rozpracovaný import?" : {},
+    "Zatím žádná auta" : {},
+    "Zavřít" : {},
+    "Zkontrolujte každé auto" : {},
+    "Zkouším oddělit auto od pozadí…" : {},
+    "Zkuste hledat jinou značku nebo model." : {},
+    "Zleva %lld %%, shora %lld %%, šířka %lld %%, výška %lld %% fotografie" : {
+      "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Zleva %1$lld %%, shora %2$lld %%, šířka %3$lld %%, výška %4$lld %% fotografie"
+          }
+        }
+      }
+    },
+    "Změnu se nepodařilo uložit" : {},
+    "Změnu se nepodařilo uložit. Zkuste to znovu." : {},
+    "Znalec" : {},
+    "Značek" : {},
+    "Značka" : {},
+    "Zpracovávám…" : {},
+    "Zrušit" : {},
+    "Získáno %lld XP." : {},
+    "Získáno %lld XP. Nová úroveň %lld." : {
+      "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Získáno %1$lld XP. Nová úroveň %2$lld."
+          }
+        }
+      }
+    },
+    "oblíbené" : {},
+    "od %@" : {},
+    "přidáno %@" : {},
+    "ručně" : {},
+    "spatřeno %@" : {},
+    "z návrhu modelu" : {},
+    "Údaje platí pro všechny generace v katalogu. Generace nebo rok je zpřesní." : {},
+    "Úprava nepotřebuje internet. Uložením údaje potvrzujete." : {},
+    "Úroveň %lld" : {},
+    "Čeká na kontrolu" : {},
+    "Čeká na potvrzení" : {},
+    "Širší" : {},
+    "Žádná oblíbená auta" : {},
+    "Žádný z návrhů" : {}
+  },
+  "version" : "1.0"
+}
